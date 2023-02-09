@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState } from "react";
-import styles from "./header.module.scss";
+import styles from "./Header.module.scss";
 
 /**
  * Header component: Client side component
@@ -73,7 +73,7 @@ const Header = () => {
       <header className={headerStyling}>
         <div className={logoDivStyling}>
           <Link className={logoStyling} href="/">
-            <Image src="favicon.svg" alt="Logo" height={40} width={40} />
+            <Image src="./favicon.svg" alt="Logo" height={40} width={40} />
             <p className="ml-2">Chanaka Perera</p>
           </Link>
         </div>
