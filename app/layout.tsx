@@ -1,21 +1,21 @@
-'use client'
+import Header from "@/components/Header";
+import "./globals.css";
 
-import Header from '@/components/Header'
-import './globals.css'
-import { usePathname } from "next/navigation";
-
-export default function RootLayout({children}: {
-  children: React.ReactNode,
-}) {
-  const path = usePathname();
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {  
 
   return (
     <html lang="en">
-      <head/>
+      <head />
       <body>
-        {path != "/studio" &&<Header></Header>}
-        <div className='bg-gray-900 h-screen h-100vh pt-[100px] text-white'>{children}</div> 
+        <Header></Header>
+        <div className="bg-gray-900 min-h-screen max-h-full pt-[100px] text-white pb-2">
+          {children}
+        </div>
       </body>
     </html>
-  )
+  );
 }

@@ -33,7 +33,7 @@ const Header = () => {
 
   // Tailwind styling for rendering
   const headerStyling: string =
-    "fixed w-[100%] h-[90px] pt-3 pb-3 flex items-center bg-white z-20";
+    "fixed w-[100%] h-[90px] pt-3 pb-3 flex items-center bg-white z-20 border-b-4 border-solid border-slate-600";
   const logoDivStyling: string = "ml-5 flex-1";
   const logoStyling: string = "flex items-center";
   const desktopMenuStyling: string =
@@ -53,14 +53,18 @@ const Header = () => {
       <>
         {headerMenu.map((link) => {
           return (
-            <div
-              key={link.id}
-              className={
-                useDesktop ? desktopMenuTabStyling : mobileMenuTabStyling
-              }
-            >
-              <Link href={link.href}>{link.name}</Link>
-            </div>
+            <>
+              <Link href={link.href}>
+                <div
+                  key={link.id}
+                  className={
+                    useDesktop ? desktopMenuTabStyling : mobileMenuTabStyling
+                  }
+                >
+                  {link.name}
+                </div>
+              </Link>
+            </>
           );
         })}
       </>

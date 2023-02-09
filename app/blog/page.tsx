@@ -6,46 +6,56 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { useState, CSSProperties } from "react";
 import { PacmanLoader } from "react-spinners";
 
-export default async function BlogPage() {
+export default function BlogPage() {
+  const displayNumItems = 4;
+
   const [blogItemsOnDisplay, setBlogItemsOnDisplay] = useState(
-    allBlogs.slice(0, 4)
+    allBlogs.slice(0, displayNumItems)
   );
+  let [loading, setLoading] = useState(true);
+  let [hasMore, setHasMore] = useState(true);
 
   const fetchMoreData = () => {
     setTimeout(() => {
+      console.log("fetching next set");
       setBlogItemsOnDisplay((prevBlogList) => {
         const end =
-          prevBlogList.length + 4 > allBlogs.length
-            ? prevBlogList.length + 4
-            : allBlogs.length;
-        const nextItems = blogItemsOnDisplay.slice(prevBlogList.length, end);
+          prevBlogList.length + displayNumItems > allBlogs.length
+            ? allBlogs.length
+            : prevBlogList.length + displayNumItems;
+        setHasMore(end == allBlogs.length ? false: true); 
+        const nextItems = allBlogs.slice(prevBlogList.length, end);
+        setLoading(!loading);
         return prevBlogList.concat(nextItems);
       });
-    }, 1500);
+    }, 1000);
   };
 
   const override: CSSProperties = {
     display: "block",
     margin: "0 auto",
-    borderColor: "white",
+    marginBottom: "20",
+    borderColor: "white"
   };
 
   const loader = () => {
     return (      
       <PacmanLoader
-        color={"#ffffff"}        
+        className="mt-[2px]"                
         cssOverride={override}
-        size={150}
+        size={20}
+        color="white"
+        margin='10'
       />
     );
   }
 
   const infiniteScroll = () => {
     return (
-      <InfiniteScroll
-        dataLength={allBlogs.length}
+      <InfiniteScroll        
+        dataLength={blogItemsOnDisplay.length}
         next={fetchMoreData}
-        hasMore={true}
+        hasMore={hasMore}
         loader={loader()}
       >
         {blogItemsOnDisplay.map((blog, index) => (
@@ -54,6 +64,7 @@ export default async function BlogPage() {
               title={blog.title}
               summary={blog.summary}
               image={blog.image}
+              slug = {blog.slug}
             ></BlogCard>
           </div>
         ))}
@@ -61,5 +72,5 @@ export default async function BlogPage() {
     );
   };
 
-  return <section>{infiniteScroll()}</section>;
+  return <section className="h-[100%]">{infiniteScroll()}</section>;
 }
