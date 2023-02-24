@@ -4,7 +4,7 @@ type Props = {
 };
 
 const CodeWrapper: React.FC<Props> = ({ children, tailwindStyles }) => {
-  return <div className={`bg-white shadow-inner shadow-lg ${tailwindStyles}`}>{children}</div>;
+  return <div className={`bg-white shadow-inner ${tailwindStyles}`}>{children}</div>;
 };
 
 export default CodeWrapper;
