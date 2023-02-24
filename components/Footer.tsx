@@ -1,0 +1,78 @@
+"use client";
+
+import Image from "next/image";
+import { motion } from "framer-motion";
+
+const Footer = () => {
+  // Define footer links for rendering
+  type footerLink = {
+    icon: string;
+    name: string;
+    href: string;
+    id: number;
+  };
+  const mediumLink = {
+    icon: "./icons/medium-icon.svg",
+    name: "Medium",
+    href: "https://medium.com/@chanakap845",
+    id: 1,
+  };
+  const linkedInLink = {
+    icon: "./icons/linkedin-icon.svg",
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/chanaka123",
+    id: 2,
+  };
+  const githubLink = {
+    icon: "./icons/github-icon.svg",
+    name: "Github",
+    href: "https://github.com/TappingWater",
+    id: 3,
+  };
+  const footerLinks: footerLink[] = [mediumLink, linkedInLink, githubLink];
+
+  // Get date for copyright message
+  const date = new Date();
+  const year = date.getFullYear();
+  const cpyRightMsg = `${year} Chanaka Perera | All rights reserved`;
+
+  // Tailwind Styling
+  const footerStyling =
+    "bg-white text-black h-[20%] p-1 border-t-4 border-solid border-slate-600 font-text text-xs";
+  const linkDivStyling = "flex justify-center space-x-4 mb-1 align-baseline";
+  const copyrightStyling = "text-center";
+
+  return (
+    <footer className={footerStyling}>
+      <div className={linkDivStyling}>
+        {footerLinks.map((link) => (
+          <motion.a
+            href={link.href}
+            key={link.id}
+            whileHover={{ scale: 1.1, textDecoration: "underline" }}
+            whileTap={{ scale: 0.85 }}
+            target="_blank"
+          >
+            <div
+              className="p-2 rounded-full w-[100px] flex flex-col items-center"
+              key={link.id}
+            >
+              <motion.div>
+                <Image
+                  src={link.icon}
+                  alt={link.name}
+                  height={30}
+                  width={30}
+                ></Image>
+              </motion.div>
+              <p>{link.name}</p>
+            </div>
+          </motion.a>
+        ))}
+      </div>
+      <p className={copyrightStyling}>Copyright &copy; {cpyRightMsg}</p>
+    </footer>
+  );
+};
+
+export default Footer;

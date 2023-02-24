@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import "./globals.css";
 import { Merriweather, Raleway, Roboto_Condensed } from "@next/font/google";
+import Footer from "@/components/Footer";
 
 // Load optimized fonts for self hosting to avoid CLS.
 const mont = Raleway({
@@ -38,7 +39,8 @@ export default function RootLayout({
       <head />
       <body className={fontStyling}>
         <Header></Header>
-        <div className={bodyStyling}>{children}</div>
+        <main className={bodyStyling}>{children}</main>
+        <Footer></Footer>
       </body>
     </html>
   );

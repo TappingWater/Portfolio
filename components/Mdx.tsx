@@ -22,10 +22,15 @@ function RoundedImage(props) {
   return <Image alt={props.alt} className="rounded-lg" {...props} width={500} height={500}/>;
 }
 
+function CodeBlock(props) {
+  return <div className="code-block">{props.children}</div>;
+}
+
 const components = {
   Image: RoundedImage,
   a: CustomLink,
-  img: RoundedImage
+  img: RoundedImage,
+  CodeBlock: CodeBlock  
 };
 
 interface MdxProps {

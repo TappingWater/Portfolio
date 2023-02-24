@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { usePathname } from 'next/navigation';
+import { usePathname } from "next/navigation";
 
 // Render tabs for menu function
 const MenuTabs: React.FC<{ useDesktop: boolean }> = (props) => {
@@ -44,27 +44,29 @@ const MenuTabs: React.FC<{ useDesktop: boolean }> = (props) => {
   const mobileMenuTabStyling: string = `${commonTabsStyles} w-[85%] text-left`;
   const activeStyling: string = " font-semibold";
 
-	const pathname = usePathname();
+  const pathname = usePathname();
 
   // Render tabs to be used for desktop and mobile menu
   return (
     <>
       {headerMenu.map((link) => {
         return (
-          <>
-            <Link href={link.href} key={link.id}>
-              <motion.button
-                className={(props.useDesktop
-                  ? desktopMenuTabStyling
-                  : mobileMenuTabStyling
-                ).concat(pathname === (link.href) ? activeStyling : "")}                
-                variants={props.useDesktop ? {} : mobileTabVariants}
-                whileTap={{ scale: 0.85 }}
-              >
-                {link.name}
-              </motion.button>
-            </Link>
-          </>
+          <Link
+            href={link.href}
+            key={props.useDesktop ? link.id : link.id + "a"}
+          >
+            <motion.button
+              className={(props.useDesktop
+                ? desktopMenuTabStyling
+                : mobileMenuTabStyling
+              ).concat(pathname === link.href ? activeStyling : "")}
+              variants={props.useDesktop ? {} : mobileTabVariants}
+              whileTap={{ scale: 0.85 }}
+              key={props.useDesktop ? link.id + "b" : link.id + "c"}
+            >
+              {link.name}
+            </motion.button>
+          </Link>
         );
       })}
     </>
