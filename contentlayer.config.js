@@ -33,6 +33,18 @@ export const Blog = defineDocumentType(() => ({
       type: 'string',
       required: true
     },
+    technologies: {
+      type: 'list', of:{type: 'string'},
+      required: true
+    },
+    tags: {
+      type: 'list', of:{ type: 'string'},
+      required: true
+    },
+    medium: {
+      type: 'string',
+      required: false
+    }
   },
   computedFields,
 }));

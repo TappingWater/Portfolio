@@ -31,7 +31,7 @@ export default function RootLayout({
   // Tailwind styling
   const fontStyling = `${mont.variable} ${libre.variable} ${roboto.variable}`;
   const bodyStyling =
-    "bg-gray-900 min-h-screen max-h-full pt-[100px] text-white pb-2 font-text";
+    "bg-gray-900 min-h-screen max-h-full w-[100%] pt-[100px] text-white pb-2 font-text";
 
   // Render layout
   return (

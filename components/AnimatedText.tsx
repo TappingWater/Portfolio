@@ -67,7 +67,7 @@ const AnimatedText = () => {
       <TypeAnimation
         sequence={sequence}
         wrapper="div"
-        speed={45}
+        speed={70}
         className="text-black whitespace-pre-line font-tabs font-medium text-lg md:text-xl"
       />
     </>

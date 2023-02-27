@@ -21,7 +21,7 @@ const Header = () => {
   const desktopMenuStyling: string =
     "hidden md:flex flex-1 flex-row items-baseline gap-x-10 justify-end mr-5 mt-10";
   const mobileSideBarStyling: string =
-    "sm:flex flex-col fixed bg-gray-100 ml-[80%] mt-[90px] w-[20%] h-[100vh] pt-2 pb-2 pl-2 space-y-5 z-10 md:hidden";
+    "sm:flex flex-col fixed bg-gray-100 ml-[80%] mt-[90px] w-[20%] h-[100vh] pt-2 pb-2 pl-2 space-y-5 z-50 md:hidden";
   const mobileHamburgerIconStyling: string =
     "relative flex flex-row first-letter:flex-1 justify-end items-center md:hidden";
 
