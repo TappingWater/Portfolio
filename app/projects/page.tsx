@@ -1,16 +1,16 @@
 "use client";
 
-import { motion, useCycle } from "framer-motion";
-import { allBlogs } from "@/.contentlayer/generated/index.mjs";
-import BlogCard from "@/components/DisplayCard";
+import { allProjects } from "@/.contentlayer/generated/Project/_index.mjs";
 import { useState } from "react";
+import { motion, useCycle } from "framer-motion";
+import BlogCard from "@/components/DisplayCard";
 import DropSelect from "@/components/DropSelect";
 
-export default function BlogPage() {
-  const [blogItemsOnDisplay, setBlogItemsOnDisplay] = useState(allBlogs);
+const ProjectsPage = () => {
+	const [projOnDisplay, setProjOnDisplay] = useState(allProjects);
   const [refresh, toggleRefresh] = useCycle(false, true);
 
-  const blogVariants = {
+	const projVariants = {
     refreshed: {
       x: [-1000, 0],
       transition: { duration: 0.8 },
@@ -21,26 +21,26 @@ export default function BlogPage() {
     },
   };
 
-  // Filter and return posts
-  const renderPosts = () => {
+	 // Filter and return posts
+	 const renderProjects = () => {
     return (
       <motion.div
         initial={true}
         animate={refresh ? "refreshed" : "unrefreshed"}
       >
-        {blogItemsOnDisplay.map((blog, index) => (
+        {projOnDisplay.map((proj, index) => (
           <motion.div
             key={index}
-            variants={blogVariants}
+            variants={projVariants}
             whileTap={{ scale: 0.9 }}
           >
             <BlogCard
-              title={blog.title}
-              summary={blog.summary}
-              image={blog.image}
-              slug={blog.slug}
-              topics={blog.tags}
-              isBlog={true}
+              title={proj.title}
+              summary={proj.summary}
+              image={proj.image}
+              slug={proj.slug}
+              topics={proj.technologies}
+							isBlog={false}
             ></BlogCard>
           </motion.div>
         ))}
@@ -48,26 +48,26 @@ export default function BlogPage() {
     );
   };
 
-  // Function to filter blogs
-  function filterBlogs(technology: string) {
+	// Function to filter projects
+  function filterProjects(technology: string) {
     toggleRefresh();
     if (technology === "None") {
-      setBlogItemsOnDisplay(allBlogs);
+      setProjOnDisplay(allProjects);
     } else {
-      setBlogItemsOnDisplay(
-        allBlogs.filter((blog) => {
-          const blogTech = new Set(blog.technologies);
-          return blogTech.has(technology);
+      setProjOnDisplay(
+        allProjects.filter((proj) => {
+          const projTech = new Set(proj.technologies);
+          return projTech.has(technology);
         })
       );
     }
   }
 
-  // Filter by technologies and render filter option
+	// Filter by technologies and render filter option
   const techFilter = () => {
     const techSet = new Set<string>();
-    allBlogs.forEach((blog) => {
-      blog.technologies.forEach((tech) => techSet.add(tech));
+    allProjects.forEach((proj) => {
+      proj.technologies.forEach((tech) => techSet.add(tech));
     });
 
     return (
@@ -75,7 +75,7 @@ export default function BlogPage() {
         <DropSelect
           label="Filter by technology"
           items={Array.from(techSet)}
-          onSelect={filterBlogs}
+          onSelect={filterProjects}
         ></DropSelect>
       </div>
     );
@@ -84,7 +84,9 @@ export default function BlogPage() {
   return (
     <section className="h-[100%]">      
       {techFilter()}     
-      {renderPosts()}
+      {renderProjects()}
     </section>
   );
 }
+
+export default ProjectsPage;
