@@ -19,11 +19,11 @@ const BlogCard: React.FC<BlogPost> = ({
 }: BlogPost) => {
   //Styling for blog card
   const cardDiv: string =
-    "m-auto w-[80%] max-w-[800px] text-center bg-white text-black rounded-lg mt-10 mb-20 hover:underline hover:decoration-dotted";
+    "m-auto w-[80%] max-w-[800px] text-center bg-white text-black rounded-lg mt-5 mb-10 hover:underline hover:decoration-dotted";
   const cardImgDiv: string =
     "bg-slate-600 w-[100%] h-[200px] relative rounded-t-lg";
   const imageStyle: string = "block object-cover pl-1 pr-1 pt-1 pb-1";
-  const cardTextDiv: string = "h-[240px] overflow-hidden";
+  const cardTextDiv: string = "h-[220px] overflow-hidden";
   const titleStyle: string = "font-semibold text-lg mb-2 block";
   const summaryStyle: string = "ml-[20%] mr-[20%] text-justify overflow-hidden";
 

@@ -1,9 +1,33 @@
 .article {
-	h1 {
-		font-size:32px;
+
+	div {
+		-webkit-overflow-scrolling: touch;
 	}
 
 	h2 {
-		font-size: 20px;
+		font-size: 1.125rem;
+		line-height: 1.75rem; 
+		font-weight: 600;
+	}
+
+	p {
+		line-height: 1.75rem;
+		margin-bottom: 6px;
+		margin-top: 6px;
+	}
+
+	.data-rehype-pretty-code-title {
+		color: black;
+		font-weight: bold;
+	}
+
+	a {
+		color: skyblue;
+		
+	}
+
+	a:hover {
+		text-decoration: underline;
+		text-decoration-color: white;
 	}
 }
