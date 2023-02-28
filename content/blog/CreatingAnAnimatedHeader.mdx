@@ -1,0 +1,584 @@
+---
+type: Blog
+title: Using framer motion in Next 13 to create a responsive animated header
+date: 2023-02-21
+image: /blog/usingFramerMotion/step-6.gif
+tags:
+  - NextJS
+  - Animation
+  - Framer motion
+  - Responsive design
+  - Tailwind CSS
+technologies:
+  - NextJS
+  - FramerMotion
+  - TailwindCSS
+  - Front-end design
+summary: Combining tailwind CSS and framer motion to design a responsive header with animations for NextJS site
+medium: https://medium.com/@chanakap845/using-framer-motion-in-next-13-to-create-a-responsive-animated-header-9409b1f7cc5e
+---
+
+## Overview
+
+Framer motion is a production ready motion library for React. It is important to note 
+that framer motion requires React 18 or greater which is already fulfilled by Next 13 
+but if you want to use another framework or library it is good to keep that in mind. 
+In this post I wanted to use Framer motion and tailwind to create a responsive header 
+with animations to boot in a Next 13 app.
+
+<Break />
+
+## Set Up 
+
+Create a new Next 13 project, which at the time of writing was 13.1.6.
+When creating a new Next 13 project you will be asked whether you want to opt in
+to the experimental ‘app’ directory to which I gave yes but feel free to use the
+pages directory if you feel more comfortable.
+
+<CodeBlock title="Terminal">
+  ```bash 
+npx create-next-app@latest my-project --typescript --eslint
+	```
+</CodeBlock>
+
+I will be using tailwind to make life a bit easier but feel free to use CSS or SCSS
+modules as you please. Please follow these instructions to configure and install 
+tailwind on your local project:
+
+[Tailwind configuration guide](https://tailwindcss.com/docs/guides/nextjs)
+
+Install framer motion as a dependency:
+
+<CodeBlock title="Terminal">
+```bash
+npm install framer-motion
+```
+</CodeBlock>
+
+Run the development server. Next 13 supports fast refresh by default, 
+Therefore we will be able to view any changes to our code on the development server 
+at http://localhost:3000/ (might be different if port is occupied, look at your terminal 
+output).
+
+<CodeBlock title="Terminal">
+```bash
+npm run dev
+```
+</CodeBlock>
+
+At this point, I like to clean up the app directory by deleting all the default code 
+in global.css, page.module.css and the auto generated JSX in page.tsx. In Next 13, page.tsx 
+is the default home page which is conventionally different from index.tsx or index.js and 
+will be the page that we will be routed to when we start our development server.
+
+<CodeBlock title="./app/page.tsx">
+```js
+// This is what page.tsx should look like. I kept the default font
+// but feel free to delete or change it.
+import { Inter } from '@next/font/google'
+const inter = Inter({ subsets: ['latin'] })
+export default function Home() {
+  return (
+    <main>
+      Hello World!
+    </main>
+  )
+}
+```
+</CodeBlock>
+
+<Break />
+
+## Creating the header component
+
+Let’s start by creating a header component and adding it to our layout. The layout.tsx file
+ that is generated in our app directory will be used as the default layout by all pages in 
+ our application, unless configured otherwise.
+
+ <CodeBlock title="./components/header.tsx">
+```js
+const Header = () => {
+ // These will be the tabs that we will try to generate
+ const links = ['Home', 'Pokemon', 'About'];
+ 
+ return (
+  // Styling: Fixed size with 15% height and 100% width and background color
+  // of blue
+  <header className='fixed h-[15%] w-[100%] bg-blue-600'>
+   My header
+  </header>
+ )
+};
+
+export default Header;
+```
+</CodeBlock>
+
+We can then add it to our layout which will be shared by all pages that we create:
+ <CodeBlock title="./app/layout.tsx">
+```js
+// layout.tsx
+import Header from '@/components/Header'
+import './globals.css'
+
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  return (
+    <html lang="en">
+      <head />
+      <Header></Header>
+      <body>{children}</body>
+    </html>
+  )
+}
+```
+</CodeBlock>
+
+At this point if all goes according to plan you should see this on your screen:
+![step-1](/blog/usingFramerMotion/step-1.png)
+
+At this point, lets update the code in our header component to render a few tabs 
+and a basic block logo that we can animate using framer motion:
+
+ <CodeBlock title="./components/header.tsx">
+```js
+const Header = () => {
+ // Lets add a few tabs here to which we'll add routing later
+ const links = ['Home', 'Products', 'About'];
+ 
+ // Tailwind styling
+ const headerStyling = "fixed h-[120px] w-[100%] bg-blue-600 flex";
+ const logoDivStyling = "flex-1 flex items-center pl-[20px]";
+ const tabDivStyling = "flex-1 flex-row flex space-x-[40px] mt-[70px] justify-end mr-[20px]";
+ const desktopTabStyling = "bg-black h-[25px] w-[100px] rounded-sm text-center text-white";
+ const logoStyling = "w-[50px] h-[50px] bg-black"
+
+ // Render menu tabs
+ const renderMenuTabs = () => {
+  return(
+  <>
+   {links.map((link) => (    
+      <div className={desktopTabStyling} key={link}>
+       {link}
+      </div>    
+   ))}
+  </>
+  )
+ }
+ // Render our header
+ return (
+  <header className={headerStyling}>
+   <div className={logoDivStyling}>
+    <div className={logoStyling}></div>
+   </div>
+   <div className={tabDivStyling}>
+    {renderMenuTabs()}
+   </div>
+  </header>
+ )
+};
+
+export default Header;
+```
+</CodeBlock>
+
+We should now see the following on our development server:
+![step-2](/blog/usingFramerMotion/step-2.png)
+<Break />
+## Animating the header component
+At this point, lets now move on to integrating framer motion. Lets start by animating 
+the tabs on our menu so that they expand when we hover over them.
+
+The motion.div is the core component of the framer motion library. It can take different 
+types of props. In our case we want to animate based on a reaction to a gesture which is 
+hovering.
+
+To implement this functionality, the motion component has a whileHover prop that we can pass
+an object to. This object will animate our HTML element based on the passed arguments. It
+also accepts a transition prop where we can define the duration of our animation.
+
+Since we are now using framer motion in our header component, We also need to add the ‘use 
+client’ directive as it uses the useContext() hook. This tells NextJS to render the header 
+component as a client side component. (By default all components in the app directory are 
+rendered as server side components.)
+
+Framer motion is compatible with server side components by passing initial=false as a prop 
+but it will not work with scale which we will be using in our application.
+
+ <CodeBlock title="./components/header.tsx">
+```js
+"use client";
+
+import { motion } from "framer-motion";
+
+const Header = () => {
+  const links = ["Home", "Products", "About"];
+
+  // Tailwind styling
+  const headerStyling = "fixed h-[120px] w-[100%] bg-blue-600 flex";
+  const logoDivStyling = "flex-1 flex items-center pl-[20px]";
+  const tabDivStyling =
+    "flex-1 flex-row flex space-x-[40px] mt-[70px] justify-end mr-[20px]";
+  const desktopTabStyling =
+    "bg-black h-[25px] w-[100px] rounded-sm text-center text-white hover:cursor-pointer";
+  const logoStyling = "w-[50px] h-[50px] bg-black";
+  // Render menu tabs
+  const renderMenuTabs = () => {
+    return (
+      <>
+        {links.map((link) => (
+          // Create an animated div that expands on hover
+          <motion.div
+            whileHover={{ scale: 1.2, opacity: 0.8 }}
+            transition={{ duration: 0.5 }}
+            className={desktopTabStyling}
+            key={link}
+          >
+            {link}
+          </motion.div>
+        ))}
+      </>
+    );
+  };
+
+  return (
+    <header className={headerStyling}>
+      <div className={logoDivStyling}>
+        <div className={logoStyling}></div>
+      </div>
+      <div className={tabDivStyling}>{renderMenuTabs()}</div>
+    </header>
+  );
+};
+
+export default Header;
+```
+</CodeBlock>
+
+![step-3](/blog/usingFramerMotion/step-3.png)
+
+Let’s now animate our logo in an infinite loop. To do this we can make use of key frames.
+Rather than passing an object of keys with a single value of what we want to change, We can 
+pass a dictionary of keys with an array of values that we want to animate. We can also use
+the transition prop to indicate to react that we want to loop through the animations 
+endlessly.
+
+Lets update the logo div as below:
+ <CodeBlock title="./components/header.tsx">
+```js
+return (
+    <header className={headerStyling}>
+      <div className={logoDivStyling}>
+        <motion.div
+          animate={{
+            scale: [1, 1.2, 1.2, 1, 1],
+            rotate: [0, 0, 270, 270, 0],
+            borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+          }}
+     transition={{ repeat: Infinity, duration: 2 }}
+          className={logoStyling}
+        ></motion.div>
+      </div>
+      <div className={tabDivStyling}>{renderMenuTabs()}</div>
+    </header>
+  );
+```
+</CodeBlock>
+
+We should now see our logo being animated:
+![step-4](/blog/usingFramerMotion/step-4.gif)
+
+<Break />
+
+## Making the design responsive
+
+Finally, lets make our header component responsive on smaller screens. 
+Lets do so by rendering our menu as an hamburger menu on smaller screens.
+
+To create a responsive menu, we will be updating our header component to
+use a hamburger menu with an animated sidebar that pops into the screen from 
+the right.
+
+To create the SVG for the hamburger menu and close icon, I have shamelessly borrowed
+the code from the examples in the [Framer motion docs](https://www.framer.com/motion/examples/).
+
+The following code represents the SVG component that we will be using for our hamburger menu.
+Variants are a feature provided by Framer that allows us to define states and switch between
+them based on the parent. Since we will be using this component within our header component
+which will be its’ parent element it will determine whether it’s in a closed or open state 
+and the SVG will take the form of a hamburger menu or close icon based on the that state.
+
+<CodeBlock title="./components/MenuToggle.tsx">
+```js
+import { motion } from "framer-motion";
+
+const Path = (props: any) => (
+  <motion.path
+    fill="transparent"
+    strokeWidth="3"
+    stroke="hsl(0, 0%, 18%)"
+    strokeLinecap="round"
+    {...props}
+  />
+);
+
+const MenuToggle: React.FC<{ toggle: () => void }> = (props) => {
+  const buttonStyling: string = "bg-white rounded-full p-4";
+  return (
+    <button onClick={props.toggle} className={buttonStyling}>
+      <svg width="23" height="23" viewBox="0 0 23 23">
+        <Path
+          variants={{
+            closed: { d: "M 2 2.5 L 20 2.5" },
+            open: { d: "M 3 16.5 L 17 2.5" },
+          }}
+        />
+        <Path
+          d="M 2 9.423 L 20 9.423"
+          variants={{
+            closed: { opacity: 1 },
+            open: { opacity: 0 },
+          }}
+          transition={{ duration: 0.1 }}
+        />
+        <Path
+          variants={{
+            closed: { d: "M 2 16.346 L 20 16.346" },
+            open: { d: "M 3 2.5 L 17 16.346" },
+          }}
+        />
+      </svg>
+    </button>
+  );
+}
+
+export default MenuToggle;
+```
+</CodeBlock>
+
+![step-5](/blog/usingFramerMotion/step-5.gif)
+
+To get the functionality above, we need to pass in state as well as be able to animate 
+our sidebar. To do so we can wrap the JSX returned by the header component in a motion.div 
+where it will determine the state of “open” and “closed”.
+
+<CodeBlock title="./components/Header.tsx">
+```js
+// Hook provided by framer similar to useState that allows us to toggle between
+// states. We pass this to our SVG button to toggle the state and propagate the animation.
+const [isOpen, toggleOpen] = useCycle(false, true);
+// Parent element which is false at the beginning and determines whether or not
+// to animate based on the isOpen variable
+<motion.div initial={false} animate={isOpen ? "open" : "closed"}>
+```
+</CodeBlock>
+
+In addition, we also need to render the link tabs on our sidebar as a column rather than a 
+single row in desktop mode. We can add separate tailwind styling and update our render 
+function to create this functionality.
+
+For our side bar, We need to animate it so that it pops out from the right of our screen. 
+We can style it then translate it’s position using framer. Since the link tabs will children
+of the sidebar, we want to delay their animations till we finished animating the sidebar. 
+We can also make use of the stagger children property in transition:
+
+<CodeBlock title="./components/Header.tsx">
+```js
+const sideBarStyling =
+    "fixed w-[30%] ml-[70%] h-[100vh] mt-[120px] flex flex-col items-center space-y-[20px] pt-4 bg-blue-300 md:hidden";
+
+  // Variants for sidebar
+  const sidebar = {
+    open: { 
+      x: '0%',        
+      transition: {
+        // Type of animation
+        type: "spring",
+        stiffness: 200,
+        // Will reduce bounce and make it smoother
+        damping: 40,
+        // Will make it so that the tabs are animated from top to bottom
+        staggerChildren: 0.07,
+        // Animate children once sidebar has been loaded
+        delayChildren: 0.15    
+      },
+    },
+    closed: {   
+      x: '100%',     
+      transition: {
+        delay: 0.5,
+        type: "spring",
+        stiffness: 400,   
+        damping: 40,  
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+        bounce:  0
+      },
+    },
+  };
+```
+</CodeBlock>
+
+Our header component will now look like:
+
+<CodeBlock title="./components/Header.tsx">
+```js
+"use client";
+
+import { motion, useCycle } from "framer-motion";
+import MenuToggle from "./MobileMenu";
+
+const Header = () => {
+  const links = ["Home", "Products", "About"];
+  const [isOpen, toggleOpen] = useCycle(false, true);
+
+  // Tailwind styling
+  const headerStyling = "fixed h-[120px] w-[100%] bg-blue-600 flex";
+  const logoDivStyling = "flex-1 flex items-center pl-[20px]";
+  const tabDivStyling =
+    "hidden md:flex flex-1 flex-row flex space-x-[40px] mt-[70px] justify-end mr-[20px]";
+  const mobileTabDivStyling =
+    "flex sm:flex-1 justify-end mr-[20px] items-center md:hidden";
+  const desktopTabStyling =
+    "bg-black h-[25px] w-[100px] rounded-sm text-center text-white hover:cursor-pointer";
+  const mobileTabStyling =
+    "bg-black h-[25px] w-[80%] rounded-sm text-white hover:cursor-pointer z-100 pl-2";
+  const logoStyling = "w-[50px] h-[50px] bg-black";
+  const sideBarStyling =
+    "fixed w-[30%] ml-[70%] h-[100vh] mt-[120px] flex flex-col items-center space-y-[20px] pt-4 bg-blue-300 md:hidden";
+
+  // Variants for sidebar
+  const sidebar = {
+    open: { 
+      x: '0%',        
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 40,
+        staggerChildren: 0.07,
+        delayChildren: 0.15    
+      },
+    },
+    closed: {   
+      x: '100%',     
+      transition: {
+        delay: 0.5,
+        type: "spring",
+        stiffness: 400,   
+        damping: 40,  
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+        bounce:  0
+      },
+    },
+  };
+
+  // Variants for mobile tabs
+  const mobileTabVariants = {
+    open: {
+      y: 0,   
+      opacity: 1,
+      transition: {
+        y: { stiffness: 1000, velocity: -100 },
+      },
+    },
+    closed: {
+      y: 50,   
+      opacity: 0,
+      transition: {
+        y: { stiffness: 1000 },
+      },
+    },
+  };
+
+  // Render menu tabs
+  const renderMenuTabs = (useMobileStyling: boolean) => {
+    return (
+      <>
+        {links.map((link) => (
+          <motion.div
+            whileHover={{ scale: 1.2, opacity: 0.8 }}
+            whileTap={{ scale: 0.8, opacity: 0.8 }}
+            transition={{ duration: 0.15 }}
+            className={useMobileStyling ? mobileTabStyling : desktopTabStyling}
+            variants={useMobileStyling ? mobileTabVariants : {}}
+            key={link}
+          >
+            {link}
+          </motion.div>
+        ))}
+      </>
+    );
+  };
+
+  // Render sidebar
+  const renderSideBar = () => {
+    return (
+      <motion.div variants={sidebar} className={sideBarStyling}>
+        {renderMenuTabs(true)}
+      </motion.div>
+    );
+  };
+
+  return (
+    <motion.div initial={false} animate={isOpen ? "open" : "closed"}>
+      <header className={headerStyling}>
+        <div className={logoDivStyling}>
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1.2, 1, 1],
+              rotate: [0, 0, 270, 270, 0],
+              borderRadius: ["20%", "20%", "50%", "50%", "20%"],
+            }}
+            transition={{ repeat: Infinity, duration: 2 }}
+            className={logoStyling}
+          ></motion.div>
+        </div>
+        <div className={tabDivStyling}>{renderMenuTabs(false)}</div>
+        <motion.div
+          initial={false}
+          animate={isOpen ? "open" : "closed"}
+          className={mobileTabDivStyling}
+        >
+          <MenuToggle toggle={() => toggleOpen()} />
+        </motion.div>
+      </header>
+      {renderSideBar()}
+    </motion.div>
+  );
+};
+
+export default Header;
+```
+</CodeBlock>
+
+We should now have a full animated sidebar:
+![step-6](/blog/usingFramerMotion/step-6.gif)
+
+<Break />
+
+## Next steps:
+Change the div tabs to Link elements and add navigation functionality. (To create a route 
+in Next 13’s app folder, you simply need to create a folder with a page.tsx file. For 
+example, to create a products page you can create a folder in the app directory called 
+products and add a page.tsx file inside of it. We can then use a Link element in Next 13 
+for routing.)
+
+[Next 13 Docs](https://beta.nextjs.org/docs)
+
+<CodeBlock title="./components/Header.tsx">
+```js
+<Link href="/products" />
+```
+</CodeBlock>
+
+Learn more about framer motion directly from the docs. The examples is a great place to 
+start:
+
+[Framer motion examples](https://www.framer.com/motion/examples/)
+
+A completed version of the code has been uploaded 
+to [my github](https://github.com/TappingWater/AnimatedHeader).

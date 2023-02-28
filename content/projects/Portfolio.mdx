@@ -1,0 +1,50 @@
+---
+type: Project
+title: Personal Portfolio
+summary: Personal site to share my thoughts and display my skills
+image: /projects/portfolio/home.gif
+github: https://github.com/TappingWater/Portfolio
+technologies: 
+- NextJs
+- FramerMotion
+- Vercel
+- TailwindCSS
+---
+## Overview
+Personal portfolio site created to display my skills and share my thoughts. This site was 
+created using NextJs with the help of FramerMotion and TailwindCSS to improve UI/UX design
+and deployed to Vercels' edge network.
+
+## Features
+Home page was designed as the default landing page. Made use of animated text to create a 
+typewriter effect similar to that of a bash terminal and added code to follow mouse and tap 
+movements using the avatars' eyes.
+
+![home.gif](/projects/portfolio/home.gif)
+
+Projects page was designed to display completed projects with details regarding skills with a brief
+overview. Content is generated as static content with the help of content layer and NextJS's static site
+generation. Made use of framer motion to improve UX  such as scaling on click and transitioning x 
+coordinates uponfilter:
+
+![projects](/projects/portfolio/projects.png)
+
+Blog page was designed to share thoughts regarding programming problems and everyday life. Blog 
+page was designed similar to projects with the help of Content Layer. Blog files are dynamically
+generated from written MDX files. 
+
+![blogs](/projects/portfolio/blogs.png)
+
+Both individual blog posts as well as project pages that are dynamically generated using computed
+slugs have been styled and made responsive using TailwindCSS. Additionally remark and rehype have been
+used to improve the readability of these generated pages.
+
+![page](/projects/portfolio/blogpage.png)
+
+Site was designed with responsiveness in mind and tested using chrome dev tools for different viewports:
+
+![responsiveDesign](/projects/portfolio/responsive-design.gif)
+
+
+
+

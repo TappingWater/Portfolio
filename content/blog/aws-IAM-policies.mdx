@@ -1,0 +1,35 @@
+---
+type: Blog
+title: AWS IAM explained
+date: 2023-02-10
+image: /blog/aws-iam/IAM-pic.webp
+tags: 
+- AWS
+- Cloud
+- IAM
+- Policies
+technologies: 
+- AWS
+- IAM
+- Cloud
+summary: Exploring Identity Access Management in AWS and how it works through practical examples
+---
+## Content
+* Overview
+* Walkthrough
+
+## Overview
+An AWS account is a bit different from a traditional account that you tend to make on the web. The best way to describe an AWS
+account is that it is a container for identities such as users who can access that account and the resources provisioned by the
+account such as EC2 and S3.
+<br />
+When creating an account for the first time, that account is designated as the **root user** for that account. The root user has unrestricted
+over all users created by that account as well as any provisioned resources and this cannot be changed. While, this might seem like 
+the default behavior it can be quite dangerous when it comes to using such accounts in larger scales. Imagine you have a company with 10 
+cloud engineers, If all of them access the company's cloud resources through this root account and were to accidentally make an unintended change to 
+your resources or users, That would be dire to the company's day to day and there would also be no way to track which of the 10 engineers in this hypothetical example 
+even made such a change. Even worse if their credentials were to get leaked a bad actor could take over the account and cause unreparable damage.
+<br />
+This is where IAM comes to the rescue. The credentials for the root user need to be protected at all costs and therefore
+
+
