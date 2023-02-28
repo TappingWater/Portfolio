@@ -81,9 +81,7 @@ const About = () => {
             sizes="100vw"
           />
           <div>
-            <p className="text-lg font-bold font-heading">
-              Virginia Tech
-            </p>
+            <p className="text-lg font-bold font-heading">Virginia Tech</p>
             <p className="italic">Bsc. Of Science (Computer Science)</p>
             <p className="text-sm font-tabs font-semibold">(2016-2020)</p>
           </div>
@@ -128,13 +126,13 @@ const About = () => {
     role: "Full stack developer",
     duration: "Aug, 2020 - July, 2021",
     summary:
-    "Ruebarue was an early start-up company aimed at providing small-time rental owners with the ability to better manage their properties and communicate with their guests. During my time at the company, I worked on their online platform which utilized golang as the backend and react as the frontend."
-    ,tech: ["go", "js", "react", "html", "css", "postgresql"],
+      "Ruebarue was an early start-up company aimed at providing small-time rental owners with the ability to better manage their properties and communicate with their guests. During my time at the company, I worked on their online platform which utilized golang as the backend and react as the frontend.",
+    tech: ["go", "js", "react", "html", "css", "postgresql"],
     responsibilities: [
       "Created and implemented the billing platform functionality to process customer payments by integrating stripe elements into the UI and processing the payments in the backend using Golang.",
       "Created  a service to track changes across all data models accessible to an account by multiple users using Reflection.",
       "Creating new cron tasks to assist in automation of tasks. Ex: Expiration of trial users.",
-      "Implemented and designed front end components using React, HTML5 and SCSS."
+      "Implemented and designed front end components using React, HTML5 and SCSS.",
     ],
   };
   const civWar: workExperience = {
@@ -144,13 +142,13 @@ const About = () => {
     role: "Research assistant",
     duration: "Jan, 2020 - May, 2020",
     summary:
-    "Civil War Photo Sleuth was a research aimed at providing a free public platform that combined crowdsourcing and AI-based face recognition to identify unknown soldiers in historical photos."
-    ,tech: ["django", "python", "postgresql"],
+      "Civil War Photo Sleuth was a research aimed at providing a free public platform that combined crowdsourcing and AI-based face recognition to identify unknown soldiers in historical photos.",
+    tech: ["django", "python", "postgresql"],
     responsibilities: [
       "Implemented UI features to allow users to manage their collection of uploaded photos and receive updates.",
       "Optimized the search algorithm in relation to Google's cloud face recognition api.",
       "Improved search accuracy by utilizing photos not detected by the face recognition api.",
-      "Addressed and fixed bugs provided by the user base."
+      "Addressed and fixed bugs provided by the user base.",
     ],
   };
 
@@ -202,7 +200,10 @@ const About = () => {
               <p className="text-justify">
                 <strong>Used tech:</strong>
               </p>
-              <TechLogoCard icons={we.tech} styles="bg-white text-black p-3 rounded-lg w-[100%] m-auto mt-[10px] mb-[10px]"></TechLogoCard>
+              <TechLogoCard
+                icons={we.tech}
+                styles="bg-white text-black p-3 rounded-lg w-[100%] m-auto mt-[10px] mb-[10px]"
+              ></TechLogoCard>
               <p className="text-justify">
                 <strong>Responsibilities:</strong>
               </p>
