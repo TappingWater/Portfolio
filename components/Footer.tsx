@@ -12,24 +12,30 @@ const Footer = () => {
     id: number;
   };
   const mediumLink = {
-    icon: "./icons/medium-icon.svg",
+    icon: "/icons/medium-icon.svg",
     name: "Medium",
     href: "https://medium.com/@chanakap845",
     id: 1,
   };
   const linkedInLink = {
-    icon: "./icons/linkedin-icon.svg",
+    icon: "/icons/linkedin-icon.svg",
     name: "LinkedIn",
     href: "https://www.linkedin.com/in/chanaka123",
     id: 2,
   };
   const githubLink = {
-    icon: "./icons/github-icon.svg",
+    icon: "/icons/github-icon.svg",
     name: "Github",
     href: "https://github.com/TappingWater",
     id: 3,
   };
-  const footerLinks: footerLink[] = [mediumLink, linkedInLink, githubLink];
+  const resumeLink = {
+    icon: "/icons/resume.svg",
+    name: "Resume",
+    href: "https://docs.google.com/document/d/1Fq7Q72Tay-nIylUo3X1fKvr8Ul8taeuJUUZtXHU6M4o/edit?usp=sharing",
+    id: 4,
+  }
+  const footerLinks: footerLink[] = [mediumLink, linkedInLink, githubLink, resumeLink];
 
   // Get date for copyright message
   const date = new Date();
@@ -38,7 +44,7 @@ const Footer = () => {
 
   // Tailwind Styling
   const footerStyling =
-    "bg-white text-black h-[20%] p-1 border-t-4 border-solid border-slate-600 font-text text-xs";
+    "bg-white text-black h-[20%] max-w-[100vw] p-1 border-t-4 border-solid border-slate-600 font-text text-xs";
   const linkDivStyling = "flex justify-center space-x-4 mb-1 align-baseline";
   const copyrightStyling = "text-center";
 
@@ -54,7 +60,7 @@ const Footer = () => {
             target="_blank"
           >
             <div
-              className="p-2 rounded-full w-[100px] flex flex-col items-center"
+              className="p-2 rounded-full w-[70px] flex flex-col items-center"
               key={link.id}
             >
               <motion.div>

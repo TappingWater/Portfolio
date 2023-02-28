@@ -22,7 +22,7 @@ function RoundedImage(props) {
   return (
     <Image
       alt={props.alt}
-      className="rounded-sm m-auto w-[90%] h-auto mt-2 mb-2"
+      className="rounded-sm m-auto w-[90%] h-auto mt-[10px] mb-[10px]"
       {...props}
       width="0"
       height="0"
