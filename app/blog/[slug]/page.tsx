@@ -46,7 +46,7 @@ export default async function Blog({ params }) {
   };
 
   return (
-    <section className="min-w-100vw max-w-fit p-3 m-4">
+    <section className="w-[80%] m-auto p-3 text-justify">
       <h1 className="font-bold text-3xl font-heading">
         <Balancer>{post.title}</Balancer>
       </h1>
