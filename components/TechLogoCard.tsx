@@ -146,7 +146,7 @@ const TechLogoCard:React.FC<LogoCardProps> = ({label, icons, styles}) => {
 	return (
 		<div className={style}>
         {label && <p className="text-center mb-2 mt-2 font-semibold">{label}</p>}
-        <div className="flex flex-row space-x-8 justify-center flex-wrap gap-y-4">
+        <div className="flex flex-row space-x-8 justify-around flex-wrap gap-y-4">
           {icons.filter((icon)=>linkMap.has(icon)).map((icon) => (					
 							<div className="flex flex-col items-center" key={icon}>
 								<Image

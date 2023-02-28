@@ -60,7 +60,7 @@ const About = () => {
   function education() {
     return (
       <div>
-        <h2 className="m-auto mt-[20px] mb-[20px] w-[70%] relative text-heading text-2xl flex flex-row h-[40px] items-center">
+        <h2 className="m-auto mt-[20px] mb-[20px] w-[80%] relative text-heading text-2xl flex flex-row h-[50px] items-center">
           <Image
             src="/icons/education.svg"
             alt="education-pic"
@@ -71,7 +71,7 @@ const About = () => {
           />
           <p>Education</p>
         </h2>
-        <div className="flex flex-row items-center justify-center bg-white text-black w-[70%] h-[100px] m-auto rounded-lg pt-[12px] pb-[12px]">
+        <div className="flex flex-row items-center justify-center bg-white text-black w-[80%] h-[120px] m-auto rounded-lg pt-[12px] pb-[12px]">
           <Image
             src="/icons/vt.svg"
             alt="vt-pic"
@@ -139,7 +139,7 @@ const About = () => {
   };
   const civWar: workExperience = {
     image: "/icons/vt.svg",
-    company: "Virginia Tech Crowd Lab",
+    company: "Virginia Tech",
     location: "Blacksburg, VA",
     role: "Research assistant",
     duration: "Jan, 2020 - May, 2020",
@@ -160,7 +160,7 @@ const About = () => {
   function workExperiences() {
     return (
       <>
-        <h2 className="m-auto mt-[20px] mb-[20px] w-[70%] relative text-heading text-2xl flex flex-row h-[40px] items-center">
+        <h2 className="m-auto mt-[20px] mb-[20px] w-[80%] relative text-heading text-2xl flex flex-row h-[50px] p-[5px] items-center">
           <Image
             src="/icons/work.svg"
             alt="work-pic"
@@ -172,10 +172,10 @@ const About = () => {
           <p>Work Experience</p>
         </h2>
         {myWe.map((we) => (
-          <div key={we.company} className="m-auto w-[70%] mb-[30px]">
+          <div key={we.company} className="m-auto w-[80%] mb-[30px]">
             <div
               key={we.company}
-              className="flex flex-row pt-[12px] pb-[12px] items-center justify-center w-[100%] h-[100px] bg-white text-black m-auto rounded-lg"
+              className="flex flex-row pt-[12px] pb-[12px] items-center justify-center w-[100%] h-[120px] bg-white text-black m-auto rounded-lg"
             >
               <Image
                 src={we.image}
@@ -221,7 +221,7 @@ const About = () => {
   function skills() {
     return (
       <>
-        <h2 className="m-auto mt-[20px] mb-[20px] w-[70%] relative text-heading text-2xl flex flex-row h-[40px] items-center">
+        <h2 className="m-auto mt-[20px] mb-[20px] w-[80%] relative text-heading text-2xl flex flex-row h-[40px] items-center">
           <Image
             src="/icons/skills.svg"
             alt="work-pic"
