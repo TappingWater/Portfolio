@@ -1,14 +1,14 @@
 import Header from "@/components/Header";
 import "./globals.css";
-import { Merriweather, Raleway, Roboto_Condensed } from "@next/font/google";
+import { Merriweather, Nunito, Roboto_Condensed } from "@next/font/google";
 import Footer from "@/components/Footer";
 
 // Load optimized fonts for self hosting to avoid CLS.
-const mont = Raleway({
+const mont = Nunito({
   subsets: ["latin"],
   variable: "--font-text",
   style: ["italic", "normal"],
-  weight: ["100", "300", "400", "500", "700"],
+  weight: ["200", "300", "400", "500", "700"],
 });
 const libre = Merriweather({
   subsets: ["latin"],

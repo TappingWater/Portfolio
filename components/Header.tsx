@@ -57,7 +57,7 @@ const Header = () => {
     <motion.div initial={false} animate={isOpen ? "open" : "closed"}>
       <header className={headerStyling}>
         <div className={logoDivStyling}>
-          <Image src="./favicon.svg" alt="Logo" height={40} width={40} />
+          <Image src="/favicon.svg" alt="Logo" height={40} width={40} />
           <p className="ml-2 font-heading font-semibold text-md">Chanaka Perera</p>
         </div>
         <div className={desktopMenuStyling}>

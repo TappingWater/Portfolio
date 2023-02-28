@@ -26,7 +26,7 @@ const BlogCard: React.FC<Post> = ({
     "bg-slate-600 w-[100%] h-[200px] relative contain rounded-t-lg";
   const imageStyle: string = "block object-fill pl-1 pr-1 pt-1 pb-1";
   const cardTextDiv: string = "h-[220px] overflow-hidden";
-  const titleStyle: string = "font-semibold text-lg mb-2 block";
+  const titleStyle: string = "font-semibold sm:text-sm md:text-lg mb-2 block max-h-[24%] min-2-[70%] overflow-hidden";
   const summaryStyle: string = "ml-[20%] mr-[20%] text-justify overflow-hidden";
 
   return (
