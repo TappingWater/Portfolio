@@ -22,8 +22,8 @@ const MyRick = () => {
 			const anchorY = (rekt.top + rekt.height) / 2;
 			const angleDeg = angle(x, y, anchorX, anchorY);
 
-			const eyes = document.querySelectorAll(".eye");
-			eyes.forEach((eye) => {
+			const eyes = document.querySelectorAll<HTMLElement>(".eye");
+			eyes.forEach((eye) => {        
 				eye.style.transform = `rotate(${90 + angleDeg}deg)`;
 			});		
   };

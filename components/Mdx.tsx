@@ -3,7 +3,7 @@ import Image from "next/image";
 import { useMDXComponent } from "next-contentlayer/hooks";
 import styles from "./Mdx.module.scss";
 
-const CustomLink = (props) => {
+const CustomLink = (props: any) => {
   const href = props.href;
   if (href.startsWith("/")) {
     return (
@@ -18,7 +18,7 @@ const CustomLink = (props) => {
   return <a target="_blank" rel="noopener noreferrer" {...props} />;
 };
 
-function RoundedImage(props) {
+function RoundedImage(props: any) {
   return (
     <Image
       alt={props.alt}
@@ -31,7 +31,7 @@ function RoundedImage(props) {
   );
 }
 
-function CodeBlock(props) {
+function CodeBlock(props: any) {
   return (
     <div className="code-block w-[100%] overflow-x-auto font-tabs touch-pan-x mt-2 mb-2 bg-white rounded-sm p-1">
       <p className="text-black font-semibold">{props.title}</p>

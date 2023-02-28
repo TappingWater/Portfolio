@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Mdx } from "components/Mdx";
 import { allBlogs } from "@/.contentlayer/generated/index.mjs";
 import Balancer from "react-wrap-balancer";
+import { Blog } from "contentlayer/generated";
 
 export async function generateStaticParams() {
   return allBlogs.map((post) => ({
@@ -9,7 +10,7 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function Blog({ params }) {
+export default async function BlogPost({ params }:{params: Blog}) {
   const post = allBlogs.find((post) => post.slug === params.slug);
 
   if (!post) {
