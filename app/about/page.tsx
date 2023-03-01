@@ -71,7 +71,7 @@ const About = () => {
           />
           <p>Education</p>
         </h2>
-        <div className="sm:pl-2 sm:justify-start md:justify-center flex flex-row items-center justify-center bg-white text-black w-[80%] h-[120px] m-auto rounded-lg pt-[12px] pb-[12px]">
+        <div className="pl-2 sm:justify-start md:justify-center md:pl-0 flex flex-row items-center bg-white text-black w-[80%] h-[120px] m-auto rounded-lg pt-[12px] pb-[12px]">
           <Image
             src="/icons/vt.svg"
             alt="vt-pic"
