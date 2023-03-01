@@ -64,18 +64,18 @@ const About = () => {
           <Image
             src="/icons/education.svg"
             alt="education-pic"
-            className="w-auto h-[100%] p-1"
+            className="w-auto h-[100%] p-1 hidden md:block"
             width="0"
             height="0"
             sizes="100vw"
           />
           <p>Education</p>
         </h2>
-        <div className="flex flex-row items-center justify-center bg-white text-black w-[80%] h-[120px] m-auto rounded-lg pt-[12px] pb-[12px]">
+        <div className="sm:pl-2 sm:justify-start md:justify-center flex flex-row items-center justify-center bg-white text-black w-[80%] h-[120px] m-auto rounded-lg pt-[12px] pb-[12px]">
           <Image
             src="/icons/vt.svg"
             alt="vt-pic"
-            className="w-auto h-[100%] p-[20px]"
+            className="hidden md:block w-auto h-[100%] p-[20px]"
             width="0"
             height="0"
             sizes="100vw"
@@ -162,7 +162,7 @@ const About = () => {
           <Image
             src="/icons/work.svg"
             alt="work-pic"
-            className="w-auto h-[100%] p-2"
+            className="hidden md:block w-auto h-[100%] p-2"
             width="0"
             height="0"
             sizes="100vw"
@@ -173,12 +173,12 @@ const About = () => {
           <div key={we.company} className="m-auto w-[80%] mb-[30px]">
             <div
               key={we.company}
-              className="flex flex-row pt-[12px] pb-[12px] items-center justify-center w-[100%] h-[120px] bg-white text-black m-auto rounded-lg"
+              className="flex flex-row pt-[12px] pb-[12px] items-center sm:justify-start md:justify-center w-[100%] h-[120px] bg-white text-black pl-[20px] rounded-lg"
             >
               <Image
                 src={we.image}
                 alt={we.company}
-                className="w-auto h-[100%] p-[10px]"
+                className="hidden sm:block w-auto h-[100%] p-[10px]"
                 width="0"
                 height="0"
                 sizes="100vw"
@@ -226,7 +226,7 @@ const About = () => {
           <Image
             src="/icons/skills.svg"
             alt="work-pic"
-            className="w-auto h-[100%] p-2"
+            className="hidden md:block w-auto h-[100%] p-2"
             width="0"
             height="0"
             sizes="100vw"
