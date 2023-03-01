@@ -1,6 +1,11 @@
 import Image from "next/image";
 import TechLogoCard from "../../components/TechLogoCard";
 
+export const metadata = {
+  description:
+    "Chanaka Perera, Software Engineer, About Page, Work history, Experience, Skills, Education, Contact,",
+};
+
 const About = () => {
   const langs = ["html", "css", "js", "ts", "java", "go"];
   const tools = [

@@ -3,11 +3,21 @@ import { Mdx } from "components/Mdx";
 import { allProjects } from "@/.contentlayer/generated/index.mjs";
 import Balancer from "react-wrap-balancer";
 import { Project } from "contentlayer/generated";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
   return allProjects.map((project) => ({
     slug: project.slug,
   }));
+}
+
+export async function generateMetadata({params}:{params: Project}): Promise<Metadata> {
+  const post = allProjects.find((post) => post.slug === params.slug);
+  return {
+    title: `Chanaka's Projects | ${post!.title}`,
+    description: `Chanaka Perera, Projects, ${post!.title}, ${post!.summary}, ${post!.technologies}`
+    
+  }
 }
 
 export default async function ProjectPost({ params }:{params: Project}) {

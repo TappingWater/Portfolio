@@ -3,6 +3,7 @@ import { Mdx } from "components/Mdx";
 import { allBlogs } from "@/.contentlayer/generated/index.mjs";
 import Balancer from "react-wrap-balancer";
 import { Blog } from "contentlayer/generated";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
   return allBlogs.map((post) => ({
@@ -10,7 +11,21 @@ export async function generateStaticParams() {
   }));
 }
 
-export default async function BlogPost({ params }:{params: Blog}) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Blog;
+}): Promise<Metadata> {
+  const post = allBlogs.find((post) => post.slug === params.slug);
+  return {
+    title: `Chanaka's Blog | ${post!.title}`,
+    description: `Chanaka Perera, Blog, Personal Blog, Programming Blog, ${
+      post!.title
+    }, ${post!.summary}, ${post!.technologies}`,
+  };
+}
+
+export default async function BlogPost({ params }: { params: Blog }) {
   const post = allBlogs.find((post) => post.slug === params.slug);
 
   if (!post) {

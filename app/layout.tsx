@@ -23,6 +23,13 @@ const roboto = Roboto_Condensed({
   weight: ["300", "400", "700"],
 });
 
+// Metadata
+export const metadata = {
+  title: 'Chanaka Perera',
+  description: 'Chanaka Perera, Software Engineer, Portfolio, Personal Site, Personal Blog, Home'
+};
+
+//  Root layout
 export default function RootLayout({
   children,
 }: {
