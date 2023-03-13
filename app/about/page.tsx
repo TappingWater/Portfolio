@@ -51,12 +51,13 @@ const About = () => {
         </p>
 
         <Image
-          src="/profile-pic.jpg"
+          src="/profile.jpg"
           alt="profile-pic"
-          className="rounded-full w-[120px] h-[120px] mt-[10px]"
+          className="rounded-full w-[120px] h-[126px] mt-[10px]"
           width="1"
           height="1"
           sizes="100vw"
+          priority
         />
       </div>
     );

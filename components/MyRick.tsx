@@ -59,7 +59,7 @@ const MyRick = () => {
       id="anchor"
       className="ml-[50px] absolute right-[-60px] bottom-[-30px] z-2"
     >
-      <Image src="/eyeless-me.png" alt="Gofer" height={100} width={100} />
+      <Image src="/eyeless-me.png" alt="Gofer" height={100} width={100} priority />
       <div>
         <Image
           className="eye absolute top-[33px] left-[34px] rounded"
@@ -67,6 +67,7 @@ const MyRick = () => {
           alt="eye"
           height={5}
           width={7}
+          priority
         />
         <Image
           className="eye absolute top-[33px] left-[53px] rounded"
@@ -74,6 +75,7 @@ const MyRick = () => {
           alt="eye"
           height={5}
           width={7}
+          priority
         />
       </div>
     </div>
