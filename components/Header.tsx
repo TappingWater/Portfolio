@@ -1,9 +1,11 @@
 "use client";
 
 import Image from "next/image";
-import MenuTabs from "./MenuTabs";
+import dynamic from "next/dynamic";
+
 import { motion, useCycle } from "framer-motion";
-import HamburgerMenu from "./HamburgerMenu";
+const HamburgerMenu = dynamic(()=>import("./HamburgerMenu"));
+const MenuTabs = dynamic(()=> import("./MenuTabs"));
 
 /**
  * Header component: Client side component
