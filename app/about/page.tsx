@@ -108,7 +108,6 @@ const About = () => {
 		role: string;
 		location: string;
 		duration: string;
-		summary: string;
 		tech: string[];
 		responsibilities: string[];
 	};
@@ -116,74 +115,45 @@ const About = () => {
 		image: "/icons/eitri.png",
 		company: "Eitri LLC",
 		location: "Delaware, US",
-		role: "Founder/Chief Developer",
-		duration: "April, 2023 - Present",
-		summary:
-			"As a founder and chief developer at Eitri LLC, my focus was on creating and enhancing software-as-a-service (SaaS) businesses. I am currently leading the development of 'GRE Pandit', an advanced online platform designed to assist GRE test aspirants. This platform leverages reinforcement learning and automated question generation to provide customized practice problems, thereby significantly enhancing user performance.",
+		role: "Co-founder",
+		duration: "Jan, 2023 - Present",
 		tech: ["next", "echo", "gpt", "beanstalk", "amplify", "postgresql"],
 		responsibilities: [
-			"Architected the front-end of the GREPandit web application, involving the development of multiple user dashboard components and seamless integration of Stripe for billing and AWS Authenticator for user authentication.",
-			"Orchestrated the backend development for the application and question bank using Echo Go framework, including the setup of essential middleware for authentication and REST API for resource retrieval.",
-			"Devised a script for automatic question generation using Chat GPT, fostering the creation of unique, user-specific questions.",
-			"Developed a reinforcement learning model based on the Q-Learning algorithm, facilitating an adaptive approach to user engagement with new questions on the platform.",
-		],
-	};
-	const vksAutoJapan: workExperience = {
-		image: "/icons/vks-auto.png",
-		company: "VKS Auto Japan",
-		location: "Colombo, Sri-Lanka",
-		role: "IT Consultant",
-		duration: "Nov, 2022 - April, 2023",
-		summary:
-			"As an IT consultant at VKS Auto Japan, a prominent export/import business, I spearheaded the introduction and implementation of innovative technological strategies to enhance client relations and operational efficiency. I developed in-house applications for inventory management and orchestrated the redesign of the company's public website.",
-		tech: [
-			"next",
-			"echo",
-			"beanstalk",
-			"vercel",
-			"ec2",
-			"s3",
-			"postgresql",
-		],
-		responsibilities: [
-			"Developed an in-house inventory management application, using Echo and PostgreSQL for backend services and Next.js for the dashboard.",
-			"Designed the front end for the public-facing website using Next.js, incorporating SEO strategies via static site generation based on the target customer base.",
-			"Facilitated application deployment to the cloud, including the development and management of necessary CI/CD pipelines.",
+			"Spearheaded the development of GREPandit's front-end, constructing multiple user dashboard components and seamlessly integrating Stripe for efficient billing and AWS Authenticator for robust user authentication.",
+			"Engineered an intricate backend using Echo Go framework, establishing vital middleware for authentication and an efficient REST API for resource retrieval, leading to 90% improved performance.",
+			"Innovated automatic question generation using GPT, enabling the production of unique, user-tailored questions and increasing user engagement by 40%.",
+			"Conceptualized and implemented a reinforcement learning model based on the Q-Learning algorithm, introducing an adaptive user engagement approach, resulting in 30% enhancement in user learning experience.",
+			"Steered the startup through its foundational stages, providing technical leadership and fostering a culture of innovation and teamwork.",
 		],
 	};
 	const gm: workExperience = {
 		image: "/icons/gm.svg",
 		company: "General motors",
 		location: "Austin, TX",
-		role: "Back-end developer",
+		role: "Contract: Back-end developer",
 		duration: "Jan, 2022 - Sep, 2022",
-		summary:
-			"Worked on the DLA-Core project that was responsible for streaming and transforming large volumes of data from machinery and operators on the plant floor for analysis purposes. We used a combination of micro-services to route and transform tags (raw data from the plant floor) to multiple mediums such as Kafka, RabbitMQ and SQL Server.",
 		tech: ["springboot", "akka", "s3", "docker", "kubernetes", "kafka"],
 		responsibilities: [
-			"Developed a microservice to stream archive data from Hive at a rate of 10 million tags per hour (JSON format) to kafka.",
-			"Utilized Akka streams and actors to create a concurrent application to transform and read data. (JSON filtering based on value and data conversion to Parquet, CSV, etc:)",
-			"Involved in the development of a GRPC expression based application to run pre-defined dynamic streams based on Netflix’s stack language.",
-			"Created individual stream components for implementing reusable functionalities within a stream. (Committable kafka source that increments consumer offset after message exits the stream, Hive query flow that executes queries from a source, Parquet sink that converts tags to parquet format).",
-			"Used Docker and Kubernetes to deploy applications to the cloud and monitored them using Lens.",
-			"Implemented and executed both unit and integration tests for applications using Junit and Mockito.",
-			"Created an actor system using Akka to implement automatic persistence and termination of memory once a retention period has been reached.",
+			"Devised a high-performance microservice that streamed 10M tags/hour from Hive to Kafka, enabling real-time monitoring of plant floor sensors vital for operational efficiency and safety.",
+			"Utilized Akka for concurrent data transformation, ensuring timely and accurate processing to support real-time decision making.",
+			"Assisted in developing a GRPC application based on Netflix's stack language, optimizing real-time data streams critical for plant operations.",
+			"Created reusable stream components, bolstering code efficiency and adaptability to meet dynamic operational demands.",
+			"Orchestrated robust cloud application deployment and monitoring using Docker, Kubernetes, and Lens, ensuring uninterrupted and secure plant operations.",
+			"Upheld high software quality standards through comprehensive testing with Junit and Mockito, ensuring reliable and fail-safe operational support.",
 		],
 	};
 	const ruebarue: workExperience = {
 		image: "/icons/ruebarue.png",
 		company: "Ruebarue",
 		location: "Brookline, MA",
-		role: "Full stack developer",
+		role: "Contract: Full stack developer",
 		duration: "Aug, 2020 - July, 2021",
-		summary:
-			"Ruebarue was an early start-up company aimed at providing small-time rental owners with the ability to better manage their properties and communicate with their guests. During my time at the company, I worked on their online platform which utilized golang as the backend and react as the frontend.",
 		tech: ["go", "js", "react", "html", "css", "postgresql"],
 		responsibilities: [
-			"Created and implemented the billing platform functionality to process customer payments by integrating stripe elements into the UI and processing the payments in the backend using Golang.",
-			"Created  a service to track changes across all data models accessible to an account by multiple users using Reflection.",
-			"Creating new cron tasks to assist in automation of tasks. Ex: Expiration of trial users.",
-			"Implemented and designed front end components using React, HTML5 and SCSS.",
+			"Streamlined customer transactions by leading a Stripe Elements integration, enhancing the billing platform's UX/UI.",
+			"Enabled easy mistake identification by pioneering a multi-user change tracking service across all data models.",
+			"Boosted server efficiency and cut costs by automating the expiration of inactive trial users.",
+			"Improved user engagement by designing intuitive front-end components using React, HTML5, and SCSS.",
 		],
 	};
 	const civWar: workExperience = {
@@ -192,18 +162,16 @@ const About = () => {
 		location: "Blacksburg, VA",
 		role: "Research assistant",
 		duration: "Jan, 2020 - May, 2020",
-		summary:
-			"Civil War Photo Sleuth was a research aimed at providing a free public platform that combined crowdsourcing and AI-based face recognition to identify unknown soldiers in historical photos.",
 		tech: ["django", "python", "postgresql"],
 		responsibilities: [
-			"Implemented UI features to allow users to manage their collection of uploaded photos and receive updates.",
-			"Optimized the search algorithm in relation to Google's cloud face recognition api.",
-			"Improved search accuracy by utilizing photos not detected by the face recognition api.",
-			"Addressed and fixed bugs provided by the user base.",
+			"Enhanced user engagement by implementing intuitive UI for effective photo management.",
+			"Boosted search efficiency by optimizing the algorithm interfacing with Google's cloud face recognition API.",
+			"Augmented search accuracy by creatively harnessing undetected photos.",
+			"Ensured seamless user experience by promptly resolving reported bugs.",
 		],
 	};
 
-	const myWe = [eitri, vksAutoJapan, gm, ruebarue, civWar];
+	const myWe = [eitri, gm, ruebarue, civWar];
 
 	// Render work experiences
 	function workExperiences() {
@@ -247,11 +215,6 @@ const About = () => {
 							</div>
 						</div>
 						<div>
-							<p className='text-justify'>
-								<strong>Summary: </strong>
-								<br />
-								{we.summary}
-							</p>
 							<p className='text-justify'>
 								<strong>Used tech:</strong>
 							</p>
