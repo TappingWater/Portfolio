@@ -1,16 +1,17 @@
 import Header from "@/components/Header";
 import "./globals.css";
-import { Merriweather, Nunito, Roboto_Condensed } from "@next/font/google";
+import { Nunito, Roboto_Condensed, Roboto_Slab } from "@next/font/google";
 import Footer from "@/components/Footer";
+import Head from "./head";
 
 // Load optimized fonts for self hosting to avoid CLS.
-const mont = Nunito({
+const mont = Roboto_Slab({
   subsets: ["latin"],
   variable: "--font-text",
-  style: ["italic", "normal"],
-  weight: ["200", "300", "400", "500", "700"],
+  style: ["normal"],
+  weight: ["300", "400", "700"],
 });
-const libre = Merriweather({
+const libre = Nunito({
   subsets: ["latin"],
   variable: "--font-heading",
   style: ["italic", "normal"],
@@ -36,15 +37,14 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   // Tailwind styling
-  const fontStyling = `${mont.variable} ${libre.variable} ${roboto.variable}`;
   const bodyStyling =
     "bg-gray-900 min-h-screen max-h-full m-0 w-[100%] pt-[100px] text-white pb-2 font-text";
 
   // Render layout
   return (
     <html lang="en">
-      <head />
-      <body className={fontStyling}>
+      <Head />
+      <body className={`${mont.variable} ${libre.variable} ${roboto.variable}`}>
         <Header></Header>
         <main className={bodyStyling}>{children}</main>
         <Footer></Footer>

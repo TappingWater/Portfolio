@@ -6,6 +6,12 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
+    fontWeight: {
+      light: '400',
+      normal: '500',
+      semibold: '600',
+      bold: '700'
+    },
     extend: {
       fontFamily: {
         text: [
