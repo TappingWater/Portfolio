@@ -68,6 +68,10 @@ export const Project = defineDocumentType(() => ({
       type: "string",
       required: false,
     },
+    url: {
+      type: "string",
+      required: false,
+    },
     technologies: {
       type: "list",
       of: { type: "string" },

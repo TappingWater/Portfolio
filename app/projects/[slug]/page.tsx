@@ -42,10 +42,23 @@ export default async function ProjectPost({ params }:{params: Project}) {
             <a
               href={post.github}
               target="_blank"
-              className="hover:underline"
+              className="hover:underline text-sky-700"
               rel="noreferrer"
             >
               {post.github}
+            </a>
+          </p>
+        )}
+        {post.url && (
+          <p>
+            <strong>URL:</strong>{" "}
+            <a
+              href={post.url}
+              target="_blank"
+              className="hover:underline text-sky-700"
+              rel="noreferrer"
+            >
+              {post.url}
             </a>
           </p>
         )}

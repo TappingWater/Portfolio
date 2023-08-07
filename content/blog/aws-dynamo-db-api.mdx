@@ -1,0 +1,116 @@
+---
+type: Blog
+title: A Beginner's Dive into Dynamo Db - API
+date: 2023-08-06
+image: /blog/aws-iam/IAM-pic.webp
+tags:
+    - AWS
+    - Cloud
+    - NoSQL
+    - DynamoDb
+technologies:
+    - AWS
+    - Cloud
+    - NoSQL
+    - DynamoDb
+summary:
+    Diving into the API and the API calls required to use Dynamo Db
+---
+
+## Overview
+This is the second part of my blog that documents my experience with Dynamo Db API and is meant to be
+read after the first part that can be found here: 
+
+[Part 1: Dynamo Db Concepts](https://www.chanakap.com/blog/aws-dynamo-db)
+
+This part will dwelve into the Dynamo Db API and how it is to be used 
+
+<Break />
+
+## What is the Dynamo Db API 
+
+In a relational Db like PostgreSQL when we want to retrieve a set of rows (Result set), we do so by first establishing a TCP 
+connection and then sending a query in structure form:
+
+<CodeBlock title="Postgres Db">
+``` sql
+	SELECT * FROM users WHERE users.name = 'chanaka';
+```
+</CodeBlock>
+
+However, Dynamo Db operations are done over HTTP using the AWS SDK which exposes API methods for performing operations. 
+
+<Break />
+
+## Setting up
+
+For testing the API methods I created a new instance of a Dynamo Db from the AWS Console. When creating this table I chose the 
+default settings and I chose 'partitionKey' as the name for the partition key and 'sortKey' as the name for the sort key. I would recommend to do the same if you wish to follow along 
+with a hands on implementation of the logic below.
+
+![createConfig](/blog/dynamo/configCreate.png)
+
+The Free tier of AWS is pretty generous if you want to test it out before rolling it out for production and will do for most POC builds:
+
+[AWS freeTier](https://aws.amazon.com/free/?all-free-tier.sort-by=item.additionalFields.SortRank&all-free-tier.sort-order=asc&awsf.Free%20Tier%20Types=*all&awsf.Free%20Tier%20Categories=*all)
+
+<Break />
+
+## API Actions
+
+Falls under 3 categories:
+
+- Item based actions: For specific items 
+- Queries: For collections 
+- Scans: For the whole table 
+
+<Break />
+
+## Item based actions 
+
+- Similar to the CRUD operations exposed by a REST API and consists of 4 main methods
+- GetItem: Similar to a GET request in a REST API or SELECT operation in SQL where you retrieve one single item 
+- PutItem: Similar to a POST request in a REST API or a CREATE operation in SQL where you write one item (Can replace existing for same partition key)
+- UpdateItem: Alter properties of an existing item. If item does not exist it would create a new item (Similar to PATCH in REST and UPDATE in SQL)
+- DeleteItem: Used to delete an item (Similar to DELETE in REST and SQL) 
+- Each request must contain the full key of the particular item (partition key and sort key)
+- All actions to alter data (Writes, Updates, Deletes) must be an item based action 
+- Therefore, you cannot alter the data of multiple items at once. (Ex: Update attribute X of all items with partition key of K where each item has a different sort key S)
+- All item based actions can only be performed on the core table and not the secondary index 
+- There are also batch actions and transaction actions 
+- They operate on multiple items at the same time but each item needs to be specified explicitly
+- In batch actions a failure of one request will not affect the other requests (Some can still pass)
+- In transactional actions all of the requests either pass or fail
+
+<Break />
+
+## Query
+
+- Retrieve multiple items using the partition key
+- Since multiple items with the same partition key are in the same collection, read operations are fast and efficient
+- We can also filter the data set further by using the sort key for the items within  the collection
+- Query API can be used on both the main table as well as the secondary index 
+
+<Break />
+
+## Scan 
+
+- Used for operations on the entire table 
+- If table is large it will paginate vs a single request
+- First request will send some data and a pagination key. This key needs to be sent back to get a new set of data. 
+
+
+<Break />
+
+## Why the heck are there so many limitations?
+
+- PostgreSQL rows can go up to 1.6 Tb and a result set can be much larger than what is possible in Dynamo Db 
+- Why can't Dynamo Db do the same? It's because the architecture behind Dynamo Db enforces writing good queries and data modelling 
+- This helps to ensure that performance does not degrade as your application scales 
+- Since data is retrieved from hashing using the partition key it can do a O(1) lookup of the data wherever it is 
+- Since the data is inherently small it can be returned to the client with low latency
+- Allows filtering methods like startsWith & \<
+- Does not allow filtering methods like endsWith() and contains()
+- This is because the items in a collection are stored in a B-tree using the sort key  
+- Since the time complexity of B-tree search is O(log n) it is a performant operation as well
+- Since a query request can only be 1 Mb at most individual requests are fast even if you have a large subset

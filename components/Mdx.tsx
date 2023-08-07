@@ -22,7 +22,20 @@ function RoundedImage(props: any) {
 	return (
 		<Image
 			alt={props.alt}
-			className='rounded-sm m-auto w-[90%] h-auto mt-[10px] mb-[10px]'
+			className='rounded m-auto w-[60%] h-auto mt-[10px] mb-[10px]'
+			{...props}
+			width='0'
+			height='0'
+			sizes='100vw'
+		/>
+	);
+}
+
+function SmallImage(props: any) {
+	return (
+		<Image
+			alt={props.alt}
+			className='rounded m-auto w-[20%] h-auto mt-[10px] mb-[10px]'
 			{...props}
 			width='0'
 			height='0'
@@ -48,14 +61,25 @@ function Break() {
 	return <div className='text-center mt-2 mb-2 font-bold text-2xl'>...</div>;
 }
 
+function Headers(props: any) {
+	return <h2 className="text-xl font-heading font-bold mb-4 mt-2">{props.children}</h2>
+}
+
+function SubHeaders(props: any) {
+	return <h3 className="font-heading font-semibold">{props.children}</h3>
+}
+
 const components = {
 	Image: RoundedImage,
 	a: CustomLink,
+	SmallImage: SmallImage,
 	img: RoundedImage,
 	CodeBlock: CodeBlock,
 	Break: Break,
 	List: List,
 	ul: List,
+	h2: Headers,
+	h3: SubHeaders,
 };
 
 interface MdxProps {

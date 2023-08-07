@@ -58,3 +58,13 @@ const securityHeaders = [
 
 module.exports = withContentlayer(nextConfig);
 
+module.exports = {
+  async rewrites() {
+      return [
+          {
+              source: '/sitemap.xml',
+              destination: '/api/sitemap',
+          },
+      ]
+  },
+}
