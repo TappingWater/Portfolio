@@ -10,6 +10,10 @@ export default function BlogPage() {
   const [blogItemsOnDisplay, setBlogItemsOnDisplay] = useState(allBlogs);
   const [refresh, toggleRefresh] = useCycle(false, true);
 
+  blogItemsOnDisplay.sort((a, b)=> {
+    return b.date.localeCompare(a.date);
+  })
+
   const blogVariants = {
     refreshed: {
       x: [-1000, 0],
@@ -58,6 +62,8 @@ export default function BlogPage() {
         allBlogs.filter((blog) => {
           const blogTech = new Set(blog.technologies);
           return blogTech.has(technology);
+        }).sort((a, b)=> {
+          return a.date.localeCompare(b.date);
         })
       );
     }

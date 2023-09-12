@@ -1,0 +1,492 @@
+---
+type: Blog
+title: Regular Expressions Demystified
+date: 2023-09-07
+image: /blog/usingFramerMotion/step-6.gif
+tags: 
+- Regular Expressions
+- Python
+- Natural Language Processing
+technologies: 
+- Python
+- Natural Language Processing
+summary: Understanding the basics of regular expressions
+---
+## Overview
+- Regular expressions are  one of the most fundamental tools used in Natural Language processing. 
+- Used to search for strings using a pattern.
+- Platform independent: same regex used in your favorite programming language can be used in a text editor like VSCode.
+- With regular expressions you can return a single match or an entire list of them that match the pattern.
+- There are many variants of regular expressions.  This article will dwell into extended regular expressions.
+- Regular expressions are case sensitive. (Therefore, One != one)
+- Regular expressions are greedy by default.
+
+## Follow along 
+- An interactive python notebook with code referencing this examples can be found at: [Google Colab](https://colab.research.google.com/drive/16DvpmCOBsb3HCDbGNK42ykUNh5a8t9l9?usp=sharing)
+
+## Sequences
+- An ordered combination of one or more characters.
+
+Ex: 
+
+For the sentence: **once upon a time in oncelot, there was once a roncean**
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+| once | 4: <u>once</u> upon a time in <u>once</u>lot, there was <u>once</u> a r<u>once</u>an | characters **o**,**n**,**c**,**e** in order |
+
+## Disjunction
+- Disjunction allows us to search for strings with variations.
+- The number of possible variations that are allowed for a string are enclosed in square brackets. (**[]**)
+- For example, if we have a string: "Natural habitats with natural biology are affected by natural disasters".
+- There are a few characters that when used within a square bracket give a special meaning: "^", "-".
+- **-**: is used to define a range.
+- For example, if we want to search for all numbers we can use: [0123456789].
+- However, this is quite bothersome and tiring, this is where we can use: [0-9] to signify a range of 0 to 9.
+- **^**: Used to denote negation.
+- **^** has to be the first character within square brackets for it to count as negation.
+- If **^** appears at a different position within square brackets such as the middle it denotes a normal "^" sign.
+
+Ex:
+
+For the text: **Natural habitats with natural biology are affected by natural disasters**
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+| natural | 2: Natural habitats with <u>natural</u> biology are affected by <u>natural</u> disasters | sequence of "natural" |
+| Natural | 1: <u>Natural</u> habitats with natural biology are affected by natural disasters | sequence of "Natural" |
+| [nN]atural | 3: <u>Natural</u> habitats with <u>natural</u> biology are affected by <u>natural</u> disasters | sequence of both "Natural" and "natural" |
+
+For the text: **abcAZ907** 
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+| [abcdefghijklmnopqrstuvxyz] | 3: <u>a</u><u>b</u><u>c</u>AZ907 | any lower case character |
+| [a-z] | 3: <u>a</u><u>b</u><u>c</u>AZ907 | any lowercase character |
+| a[a-z] | 1: <u>ab</u>cAZ907 | a followed by any lowercase character |
+| [7-9] | 2: abcAZ<u>9</u>0<u>7</u> | digits 7, 8 or 9 |
+
+For the text: **abcAZ907**
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+| [^abcdefghijklmnopqrstuvxyz] | 6: abc<u>A</u><u>Z</u><u>9</u><u>0</u><u>7</u><u>^</u> | any character that is not a lowercase letter |
+| [^a-z] | 6: abc<u>A</u><u>Z</u><u>9</u><u>0</u><u>7</u><u>^</u> | any character that is not a lowercase letter |
+| [7^9] | 3: abcAZ<u>9</u>0<u>7</u><u>^</u> | digits 7 or 9 or character ^ |
+| [^7^9] | 6: <u>a</u><u>b</u><u>c</u><u>A</u><u>Z</u>9<u>0</u>7^ | any character other than digits 7 or 9 or character ^ |
+
+## Counters 
+- Counters allow us to define patterns with a variable number of a characters.
+- **?**: Zero or one instance.
+- **\***: Zero or more instances
+- **+**: One or more instances 
+- **\{number\}**: Specific number of instances 
+
+Ex: 
+
+For the text: **The word color is sometimes referred to as colour in some interpretations.**
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+| color | 1: The word <u>color</u> is sometimes referred to as colour in some interpretations. | sequence of color |
+| colour | 1: The word color is sometimes referred to as <u>colour</u> in some interpretations. | sequence of colour |
+| colou?r | 2: The word <u>color</u> is sometimes referred to as <u>colour</u> in some interpretations. | sequence of color or colour |
+
+For the expression: **ba\*!**
+| Text | Matches | Meaning |
+|----------|----------|----------|
+| b! | 1: <u>b!</u> | character 'b' followed by zero or more 'a' followed by '!' |
+| ba! | 1: <u>ba!</u> | character 'b' followed by zero or more 'a' followed by '!' |
+| baaaaaa! | 1: <u>baaa!</u> | character 'b' followed by zero or more 'a' followed by '!' |
+
+For the expression: **ba\+!**
+| Text | Matches | Meaning |
+|----------|----------|----------|
+| b! | 0: b! | character 'b' followed by one or more 'a' followed by '!' |
+| ba! | 1: <u>ba!</u> | character 'b' followed by one or more 'a' followed by '!' |
+| baaaaaa! | 1: <u>baaa!</u> | character 'b' followed by one or more 'a' followed by '!' |
+
+For the text: **baaaaa!**
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+| ba\{5\}! | 1: <u>baaaaa!</u> | character b followed by 5 a's followed by ! |
+| ba\{4\}! | 0: baaaaa! | character b followed by 4 a's followed by ! |
+| ba\{3, 6\}! |  1: <u>baaaaa!</u> | character b followed by a minimum of 3 a's upto a maximum of 6 a's followed by ! |
+| ba\{4, \}! | 1: <u>baaaaa!</u> | character b followed by a minium of 4 a's followed by ! |
+| ba\{, 3\}! | 0: baaaaa! | character b followed by a maximum of 3 a's followed by ! |
+| ba\{, 6\}! | 1: <u>baaaaa!</u> | character b followed by a maximum of 6 a's followed by ! |
+
+## Anchors
+
+- Regular expressions used to denote a particular place for a string.
+- **^**: Used to denote the start of a line. 
+- **$**: Used to denote the end of a line. 
+- **\b**: Used to denote a word boundary.
+- **\B**: Used to denote a non word boundary. 
+- A **word** in regex: sequence of letters, digits and underscores(**_**).
+- Thus, special characters like "$" or "!" will not count as a word boundary
+
+Ex: 
+
+For python specifically, you need to enable the multiline flag to identify new lines:
+<CodeBlock title="Regex Setup for processing new line characters">
+  ```python
+flags = re.MULTILINE if multiline else 0
+compiled_pattern = re.compile(pattern, flags)
+matches = compiled_pattern.finditer(text)
+```
+</CodeBlock>
+
+For the text: **There was the person that was running t^he shop and they came and went.\nThe shop opened next day t\nhe**
+
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+|^[Tt]he|2: <u>The</u>re was the person that was running t^he shop and they came and went.<u>The</u> shop opened next day the|Line start with The or the|
+|t^he|0: There was the person that was running t^he shop and they came and went.The shop opened next day the|This should be the sequence "t^he" but in python it needs to be escaped|
+|t\\^he|1: There was the person that was running <u>t^he</u> shop and they came and went.The shop opened next day the|The sequence 't^he'|
+|ent.$|1: There was the person that was running t^he shop an$d they came and $99 w<u>ent.</u>The shop opened next day the|Sentence that ends with the sequence ent.|
+|he$|1: There was the person that was running t^he shop an$d they came and $99 went. The shop opened next day t<u>he</u>|Sentence that ends with the sequence "he"|
+|\\$99|1: There was the person that was running t^he shop an$d they came and <u>$99</u> went. The shop opened next day the|The sequence '$99'. $ needs to be escaped 
+|$99|0: There was the person that was running t^he shop an$d they came and $99 went. The shop opened next day the|Will not match anything $ needs to be escaped|
+|an\$d|1: There was the person that was running t^he shop <u>an$d</u> they came and $99 went.The shop opened next day the|The sequence 'an$d'|
+
+For the text: **The man wrote a thesis on rafther and there were others who read it and the people who read it were satisfied. The_ $99! price was on$the tag with an id code of \_99\_ 99a.**
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+|\b[Tt]he\b|3: <u>The</u> man wrote a thesis on rafther and there were others who read it and <u>the</u> people who read it were satisfied. The_ $99! price was on$<u>the</u> tag with an id code of \_99\_ 99a.|sequence of 'The' or 'the' with no letters, digits or underscores on either side of the sequence separated by a whitespace |
+|\B[Tt]he\B|2: The man wrote a thesis on raf<u>the</u>r and there were o<u>the</u>rs who read it and the people who read it were satisfied. The_ $99! price was on$the tag with an id code of \_99\_ 99a.|sequence of 'The' or 'the' such that there are letter, digits or underscores on either side|
+|\b99\b|1: The man wrote a thesis on rafther and there were others who read it and the people who read it were satisfied. The_ $<u>99</u>! price was on$the tag with an id code of \_99\_ 99a.|sequence  of '99' without letters, digits or underscores next to the left or right of the sequence separated by a whitespace|
+|\B99\B|1: The man wrote a thesis on rafther and there were others who read it and the people who read it were satisfied. The_ $99! price was on$the tag with an id code of \_<u>99</u>\_ 99a.|sequence of 99 such that there are letters, digits or underscores next to the left or right of the sequence|
+|\bthe\B|2: The man wrote a <u>the</u>sis on rafther and <u>the</u>re were others who read it and the people who read it were satisfied. The_ $99! price was on$the tag with an id code of \_99\_ 99a.|sequence of the such that there are no letters, digits or underscores to the left before a whitespace character and a letter, digit or underscore to the right before a whitespace |
+
+## Wildcard character
+- **.** : Used to denote the possibility of any character 
+![wildcard](/blog/regex/giphy.gif)
+
+Ex: 
+
+For the expression **te.m**
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|team|1: <u>team</u>|sequence of 'te' followed by any character followed by 'm'|
+|te!m|1: <u>te!m</u>|sequence of 'te' followed by any character followed by 'm'|
+|tem|0: tem|sequence of 'te' followed by any character followed by 'm'|
+|te m|1: <u>te m</u>|sequence of 'te' followed by any character followed by 'm'|
+|te am|0: te am|sequence of 'te' followed by any character followed by 'm'|
+
+For the expression **te.\*m**
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|tem|1: <u>tem</u>|sequence of 'te' followed by zero of more of any character followed by 'm'|
+|te am|1: <u>te am</u>|sequence of 'te' followed by zero of more of any character followed by 'm'|
+|te aasdsad1m|1: <u>te as1asdasd as m</u>|sequence of 'te' followed by zero of more of any character followed by 'm'|
+
+## Order precedence
+- The most important part of understanding a regex is understanding precedence. 
+- Lets say we have the regex **one|two** which means search for a string with a sequence of **one** or **two** but for **onewo** or **ontwo**.
+- Consider boe* which means search for a string with the sequence bo with zero or more occurrences of e but not for **boeboe** or **boeboeboe**.
+- This is due to order precedence. 
+- Certain operators have a higher order of precedence and evaluated first similar to algebra.
+- Similar to evaluating an algebraic expression, regex also needs to be evaluated in order.
+- Parenthesis allows us to increase the order of precedence
+
+Order of precedence is as follow:
+| Operator | Symbols |
+|----------|----------|
+|Parenthesis|()|
+|Counters|*,  +,  ?,  \{\}|
+|Sequences and Anchors|sequence, ^, $, \b, \B|
+|Disjunction| \| |
+
+- Since Disjunction has lower precedence than Sequences: one|two the two sequences one and two are first evaluated then the disjunction.
+- Since counters have higher priority than sequences: boe* the sequence is evaluated after and counter is applied to the character to its left.
+- However with parenthesis we can manipulate the order to our liking
+- If we want to search for onewo or ontwo instead of one or two we can use the regex:  **on(e|t)wo**
+- If we want to search for poepoepoe where the string poe is repeated 0 or more times: **(poe)***
+
+Ex: 
+
+For the expression **poe***
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|po|1: <u>po</u>|sequence of 'po' followed by 0 or more 'e's|
+|poeee|1: <u>poeeee</u>|sequence of 'po' followed by 0 or more e's|
+|poepoe|1: <u>poe</u>poe|sequence of 'po' followed by 0 or more e's|
+
+For the expression: **(poe)***
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|poepoe|2: <u>poe</u><u>poe</u>|sequence of 'poe' repeated 0 or more times|
+||1: <u></u>|sequence of 'poe' repeated 0 or more times|
+
+For the expression: **one|two**
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|one|1: <u>one</u>|sequence of 'one' or 'two'|
+|two|1: <u>two</u>|sequence of 'one' or 'two'|
+|one two|2: <u>one</u> <u>two</u>|sequence of 'one' or 'two'|
+|onewo|1: on<u>two</u>|sequence of 'one' or 'two'|
+|ontwo|1: <u>one</u>wo|sequence of 'one' or 'two'|
+
+For the expression: **on(e|t)wo**
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|one|0: one|sequence of 'on' followed by either 'e' or 't' followed by a sequence of 'wo'|
+|two|0: two|sequence of 'on' followed by either 'e' or 't' followed by a sequence of 'wo'|
+|one two|0: one two|sequence of 'on' followed by either 'e' or 't' followed by a sequence of 'wo'|
+|onewo|1: <u>ontwo</u>|sequence of 'on' followed by either 'e' or 't' followed by a sequence of 'wo'|
+|ontwo|1: <u>onewo</u>|sequence of 'on' followed by either 'e' or 't' followed by a sequence of 'wo'|
+
+## Other special characters:
+- These characters are mainly used as shorthand for common patterns:
+
+| Characters | Expansion | Meaning |
+|----------|----------|----------|
+|\d|[0-9]|any digit|
+|\D|[^0-9]|any non digit|
+|\w|[a-zA-Z0-9_]|any uppercase or lowercase letter or digit or underscore|
+|\W|[^\w]|any character that is not a letter, digit or underscore|
+|\s|[\r\t\n\f]| any whitespace, tab or newline
+|\S|[^\s]|non whitespace
+
+## Greedy expressions 
+- Regular expressions are greedy by default.
+- Lets say we have a input string of **"His name was poeee"** to which we apply the regular expression **"poe*"**.
+- The regular expression searches for a string with a sequence of 'po' followed by 0 or more e's.
+- Now given our input string it can return po, poe, poee or poeee.
+- However, from these options the string that will be returned as an output would be poeee.
+- This is because regex are greedy and will try to match the expression to the longest possible string.
+- However, we can also enforce a non-greedy approach by using the **?** symbol along with the **\*** or **+** symbols.
+
+Ex:
+
+For the text: His name was poeee
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+|poe*|1: His name was <u>poeee</u>|The longest string match of the sequence 'po' followed by 0 or more e's|
+|poe+|1: His name was <u>poeee</u>|The longest string match of the sequence 'po' followed by 1 or more e's|
+|poe*?|1: His name was <u>po</u>eee|The shortest string match of the sequence 'po' followed by 0 or more e's|
+|poe+?|1: His name was <u>poe</u>ee|The shortest string match of the sequence 'po' followed by 1 or more e's|
+
+## Substitutions and Capture Groups
+- In addition to changing the default order of precedence, parenthesis(**()**) can also be used to capture and store patterns.
+- If a pattern within a parenthesis matches an expression that pattern gets stored in a memory register.
+- For example lets say we have an input string of: **He was big but his opponent was bigger**.
+- We then apply a regular expression to it of: **He was (.)\* but his opponent was \1ger**.
+- This expression will create a valid match as the parenthesis matches the string **big** and stores it within a memory register references by **\1**.
+
+Ex:
+
+For the expression: **He was (.*) but his opponent was \1er**
+
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|He was big but his opponent was biger|1: <u>He was big but his opponent was biger</u>|The parenthesis captures the sequence between was and but and stores it in register referenced by \1 which is big|
+|He was fast but his opponent was faster|1: <u>He was fast but his opponent was faster</u>|The parenthesis captures the sequence between was and but and stores it in register referenced by \1 which is fast|
+|He was fast but his opponent was biger|0: He was fast but his opponent was biger|The parenthesis captures the sequence between was and but and stores it in register referenced by \1 which is fast|
+
+- Regular expressions are evaluated from left to right and therefore the strings matched by the expressions get stored in memory registers in order. 
+- It is possible to store multiple expressions and reference them using the sequential order they are stored in.
+- \1 will store the fist expression captured within parenthesis while \2 will match the second and so on.
+- A common use case for these capture groups is for substitutions.
+
+Ex:
+
+For the input string: **42 apples, 17 bananas, 3 oranges**
+
+Lets say we want to get the total number of fruits
+
+<CodeBlock title="./substiution.py">
+``` python
+import re
+# Define a regular expression pattern with capture groups
+pattern = r'(\d+) (\w+)'
+# Input string
+text = '42 apples, 17 bananas, 3 oranges'
+# Create an empty list to store fruits
+fruits_list = []
+count = 0
+# Define a substitution function that uses captured groups
+def repl(match):
+    global count
+    number = int(match.group(1))
+    fruit = match.group(2)
+    count += number  # Increment the 'count' variable
+    fruits_list.append(fruit)  # Add 'fruit' to the 'fruits_list'    
+    # Manipulate the captured data or construct a new string
+    return f'There are {number} {fruit} in the basket.'
+# Perform substitutions using re.sub()
+result = re.sub(pattern, repl, text)
+print('There are {0} fruits in the basket of {1}'.format(count, ','.join(fruits_list)))
+print(result)
+```
+</CodeBlock>
+
+This will print:
+<CodeBlock title="console">
+``` bash 
+There are 62 fruits in the basket of apples,bananas,oranges
+There are 42 apples in the basket., There are 17 bananas in the basket., There are 3 oranges in the basket.
+```
+</CodeBlock>
+
+- Parenthesis by default  stores the matched expression in a memory register.
+- However, there may be times we want to avoid such a behavior and use it just as a means of altering the order of precedence of an expression.
+- This is where we can use the **?** symbol to denote that we want to avoid such a behavior.
+- For example if we have the regex: **(? some|a few) (people|cats) like some \1**.
+- The expression that will be stored in memory would be **people|cats** and not **some|few**.
+
+Ex: 
+
+For the expression: **(?:some|few) (people|cats) like some \1**
+
+| Text | Matches | Meaning |
+|----------|----------|----------|
+|some people like some some|0: some people like some some|either the sequence 'some' or 'a few' followed by 'people' or 'cats' followed by 'like some' followed by either 'people' or 'cats' based on what was matched earlier| 
+|some people like some few|0: some people like some few|either the sequence 'some' or 'a few' followed by 'people' or 'cats' followed by 'like some' followed by either 'people' or 'cats' based on what was matched earlier| 
+|some people like some cats|0: some people like some cats|either the sequence 'some' or 'a few' followed by 'people' or 'cats' followed by 'like some' followed by either 'people' or 'cats' based on what was matched earlier| 
+|some people like some people|1: <u>some people like some people</u>|either the sequence 'some' or 'a few' followed by 'people' or 'cats' followed by 'like some' followed by either 'people' or 'cats' based on what was matched earlier| 
+
+## Lookahead assertions
+- By default expressions are evaluated from left to right.
+- Lookahead assertions allow us to scan the text ahead without advancing the match pointer.
+- Lookahead assertions are denoted as either **?=** or **?!** within **()**.
+- **?=** is used to check for whether the expression matches and **?!** is used to check if the expression does not match.
+
+Ex:
+
+For the text: **I love apple pie, but not apple juice or apple tart. apple pie is the best.**
+| Expression | Matches | Meaning |
+|----------|----------|----------|
+|apple(?= pie)|2: I love <u>apple </u>pie, but not apple juice or apple tart. <u>apple </u>pie is the best.|the sequence 'apple' followed by ' pie'|
+|apple(!= pie)|2: I love apple pie, but not <u>apple </u>juice or <u>apple </u>tart. apple pie is the best.|the sequence 'apple' followed by anything but ' pie'|
+
+## Practical examples 
+- Based on the concepts above lets' use Regex for one of the most common uses in a web application.
+- For testing password strength.
+- Lets first define the criteria needed for a modern password:
+- At,least 8 characters.
+- Must contain an uppercase character, a lowercase character, a number and a symbol 
+- Lets start by defining our first requirement:
+- .\{8,\}
+- The wildcard proceeded by a counter of a minimum of 8 ensures that our password 
+
+<CodeBlock title="./pwdStrength.py">
+```python
+def test_password(password, pattern):
+    compiled_pattern = re.compile(pattern)
+    if compiled_pattern.match(password):
+        print('Password "{0}" passes for expression: {1}\n'.format(password, pattern))
+    else:
+        print('Password "{0}" fails for expression: {1}\n'.format(password, pattern))
+
+# Allow any characters (wildcard)
+starting_regex = r'.*'
+password1 = ''
+password2 = 'abc'
+password3 = 'abcdefgh'
+test_password(password1, starting_regex)
+test_password(password2, starting_regex)
+test_password(password3, starting_regex)
+
+# Minimum 8 characters requirement
+min_char_regex = r'^.\{8,\}$'
+password4 = 'abcdefghasdaaaaaaaaaaaa'
+test_password(password1, min_char_regex)
+test_password(password2, min_char_regex)
+test_password(password3, min_char_regex)
+test_password(password4, min_char_regex)
+
+# We still dont have upper case requirement
+# Our password needs to contain atleast one upper case character
+# Lets use a lookahead expression to check whether there is a upper case letter
+upper_case_regex = r'^(?=.*?[A-Z]).\{8,\}$'
+password5 = 'aAa'
+password6 = 'AVCDEFGHI'
+password7 = 'asdaAdasd123'
+test_password(password1, upper_case_regex)
+test_password(password2, upper_case_regex)
+test_password(password3, upper_case_regex)
+test_password(password4, upper_case_regex)
+test_password(password5, upper_case_regex)
+test_password(password6, upper_case_regex)
+test_password(password7, upper_case_regex)
+
+# We still have some more requirements;
+# Need a lower case, number and a special character
+final_regex = r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).\{8,\}$'
+password7 = 'asdaAdasd123'
+password8 = 'aA2!'
+password9 = '#a3aA'
+password10 = 'asdaAdasd12!3'
+password11 = 'Password123#'
+test_password(password1, final_regex)
+test_password(password2, final_regex)
+test_password(password3, final_regex)
+test_password(password4, final_regex)
+test_password(password5, final_regex)
+test_password(password6, final_regex)
+test_password(password7, final_regex)
+test_password(password8, final_regex)
+test_password(password9, final_regex)
+test_password(password10, final_regex)
+test_password(password11, final_regex)
+```
+</CodeBlock>
+
+This will print:
+<CodeBlock title="console">
+``` bash 
+Password "" passes for expression: .*
+
+Password "abc" passes for expression: .*
+
+Password "abcdefgh" passes for expression: .*
+
+Password "" fails for expression: ^.{8,}$
+
+Password "abc" fails for expression: ^.{8,}$
+
+Password "abcdefgh" passes for expression: ^.{8,}$
+
+Password "abcdefghasdaaaaaaaaaaaa" passes for expression: ^.{8,}$
+
+Password "" fails for expression: ^(?=.*?[A-Z]).{8,}$
+
+Password "abc" fails for expression: ^(?=.*?[A-Z]).{8,}$
+
+Password "abcdefgh" fails for expression: ^(?=.*?[A-Z]).{8,}$
+
+Password "abcdefghasdaaaaaaaaaaaa" fails for expression: ^(?=.*?[A-Z]).{8,}$
+
+Password "aAa" fails for expression: ^(?=.*?[A-Z]).{8,}$
+
+Password "AVCDEFGHI" passes for expression: ^(?=.*?[A-Z]).{8,}$
+
+Password "asdaAdasd123" passes for expression: ^(?=.*?[A-Z]).{8,}$
+
+Password "" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "abc" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "abcdefgh" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "abcdefghasdaaaaaaaaaaaa" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "aAa" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "AVCDEFGHI" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "asdaAdasd123" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "aA2!" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "#a3aA" fails for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "asdaAdasd12!3" passes for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+
+Password "Password123#" passes for expression: ^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$
+```
+</CodeBlock>
+
+- Generating a final regular expression consists of fixing two kinds of errors.
+- Removing false positives. (Strings we incorrectly matched like **abc** for the expressions **.***) also called **precision**.
+- Including false negatives. (Strings we missed) also called **recall**.
+- We did not have false negatives in the example above but consider we had the expression instead: **^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).\{9,\}$**
+- We would then miss passwords like "Passwo12#" with 8 characters because we defined a minimum of 9 characters in our expression.
+- Such a case would be considered a false negative.

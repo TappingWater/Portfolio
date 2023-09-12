@@ -69,6 +69,10 @@ function SubHeaders(props: any) {
 	return <h3 className="font-heading font-semibold">{props.children}</h3>
 }
 
+function Table(props:any) {
+	return <table className="table-auto p-4 bg-white text-slate-900 border-slate-900 border-solid-2 border-spacing-2 rounded">{props.children}</table>
+}
+
 const components = {
 	Image: RoundedImage,
 	a: CustomLink,
@@ -80,6 +84,7 @@ const components = {
 	ul: List,
 	h2: Headers,
 	h3: SubHeaders,
+	table: Table
 };
 
 interface MdxProps {
