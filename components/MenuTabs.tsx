@@ -35,7 +35,7 @@ const MenuTabs: React.FC<{ useDesktop: boolean }> = (props) => {
   const projectLink = { href: "/projects", name: "Projects", id: 2 };
   const blogLink = { href: "/blog", name: "Blog", id: 3 };
   const aboutLink = { href: "/about", name: "About", id: 4 };
-  const headerMenu: link[] = [homeLink, projectLink, blogLink, aboutLink];
+  const headerMenu: link[] = [homeLink, projectLink, blogLink];
 
   // Tailwind styling
   const commonTabsStyles: string =

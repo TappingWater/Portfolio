@@ -3,14 +3,14 @@
 import { allProjects } from "@/.contentlayer/generated/Project/_index.mjs";
 import { useState } from "react";
 import { motion, useCycle } from "framer-motion";
-import BlogCard from "@/components/DisplayCard";
 import DropSelect from "@/components/DropSelect";
+import ProjectCard from "@/components/ProjectCard";
 
 const ProjectsPage = () => {
-	const [projOnDisplay, setProjOnDisplay] = useState(allProjects);
+  const [projOnDisplay, setProjOnDisplay] = useState(allProjects);
   const [refresh, toggleRefresh] = useCycle(false, true);
 
-	const projVariants = {
+  const projVariants = {
     refreshed: {
       x: [-1000, 0],
       transition: { duration: 0.8 },
@@ -21,8 +21,8 @@ const ProjectsPage = () => {
     },
   };
 
-	 // Filter and return posts
-	 const renderProjects = () => {
+  // Filter and return posts
+  const renderProjects = () => {
     return (
       <motion.div
         initial={true}
@@ -34,21 +34,21 @@ const ProjectsPage = () => {
             variants={projVariants}
             whileTap={{ scale: 0.9 }}
           >
-            <BlogCard
+            <ProjectCard
               title={proj.title}
               summary={proj.summary}
               image={proj.image}
-              slug={proj.slug}
+              link={proj.url} // Pass the project link directly
               topics={proj.technologies}
-							isBlog={false}
-            ></BlogCard>
+              isBlog={false}
+            />
           </motion.div>
         ))}
       </motion.div>
     );
   };
 
-	// Function to filter projects
+  // Function to filter projects
   function filterProjects(technology: string) {
     toggleRefresh();
     if (technology === "None") {
@@ -63,7 +63,7 @@ const ProjectsPage = () => {
     }
   }
 
-	// Filter by technologies and render filter option
+  // Filter by technologies and render filter option
   const techFilter = () => {
     const techSet = new Set<string>();
     allProjects.forEach((proj) => {
@@ -76,17 +76,17 @@ const ProjectsPage = () => {
           label="Filter by technology"
           items={Array.from(techSet)}
           onSelect={filterProjects}
-        ></DropSelect>
+        />
       </div>
     );
   };
 
   return (
-    <section className="h-[100%]">      
-      {techFilter()}     
+    <section className="h-[100%]">
+      {techFilter()}
       {renderProjects()}
     </section>
   );
-}
+};
 
 export default ProjectsPage;

@@ -32,7 +32,7 @@ const Footer = () => {
   const resumeLink = {
     icon: "/icons/resume.svg",
     name: "Resume",
-    href: "https://docs.google.com/document/d/1Fq7Q72Tay-nIylUo3X1fKvr8Ul8taeuJUUZtXHU6M4o/edit?usp=sharing",
+    href: "https://drive.google.com/file/d/1nO_30BF-IuuacDPvJOR2fcZvjEXIqMvt/view?usp=sharing",
     id: 4,
   }
   const footerLinks: footerLink[] = [mediumLink, linkedInLink, githubLink, resumeLink];
